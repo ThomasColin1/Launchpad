@@ -1,5 +1,12 @@
 // app global css in SCSS form
-.LaunchpadWrapper{
-    background-color: blue;
-    color: red;
+.wrapper{
+   color: red;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-gap: 10px;
+  //grid-auto-rows: minmax(100px, auto);
+  height: 700px;
+  width: 700px;
+  margin-left: auto;
+  margin-right: auto;
 }

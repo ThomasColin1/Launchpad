@@ -1,73 +1,25 @@
 
 <template>
   <div class="q-pa-md">
-    <q-table
-      grid
-      :rows="rows"
-      :columns="columns"
-      row-key="name"
-      row-width="100px"
-      hide-bottom
-      id="LaunchpadWrapper"
-
-    >
-    </q-table>
+    <div class="wrapper">
+      <ButtonLine ln="0"/>
+      <ButtonLine ln="1"/>
+      <ButtonLine ln="2"/>
+      <ButtonLine ln="3"/>
+      <ButtonLine ln="4"/>
+      <ButtonLine ln="5"/>
+      <ButtonLine ln="6"/>
+      <ButtonLine ln="7"/>
+    </div>
   </div>
 </template>
 
-<style lang="scss">
-  @import "../css/app.scss";
-</style>
-
-
 <script>
-
-const columns = [
-  {
-    name: 'desc',
-    required: true,
-    label: 'Dessert (100g serving)',
-    align: 'left',
-    field: row => row.name,
-    sortable: true
-  },
-]
-
-const rows = [
-  {
-    name: 'Frozen Yogurt',
-    calories: 159,
-    fat: 6.0,
-    carbs: 24
-  },
-  {
-    name: 'Ice cream sandwich',
-    calories: 237,
-    fat: 9.0,
-    carbs: 37
-  },
-  {
-    name: 'Eclair',
-    calories: 262,
-    fat: 16.0,
-    carbs: 23
-  },
-  {
-    name: 'Cupcake',
-    calories: 305,
-    fat: 3.7,
-    carbs: 67
-  },
-
-]
-
+import ButtonLine from "./ButtonLine.vue";
 export default {
     name: "Launchpad",
-  setup () {
-    return {
-      columns,
-      rows
-    }
+  components: {
+    ButtonLine,
   }
 }
 </script>
