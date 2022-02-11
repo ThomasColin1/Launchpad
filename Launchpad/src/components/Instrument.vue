@@ -10,6 +10,7 @@
       avatar
     >
       <q-icon :name="icon" />
+
     </q-item-section>
 
     <q-item-section>
@@ -25,7 +26,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'EssentialLink',
+  name: 'Instrument',
   props: {
     title: {
       type: String,

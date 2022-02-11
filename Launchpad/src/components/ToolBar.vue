@@ -1,8 +1,8 @@
 <template>
-  <div class="q-pa-md">
-    <q-toolbar class="bg-black text-white shadow-2 rounded-borders">
-      <q-btn flat label="Reset" class="center"/>
-      <q-space />
+  <!--<div class="q-pa-md">-->
+    <q-toolbar class="bg-black text-white shadow-2 rounded-borders" >
+      <q-btn flat label="Reset" id="reset"/>
+      <!--<q-space />-->
 
       <!--
         notice shrink property since we are placing it
@@ -14,7 +14,7 @@
         <q-tab name="tab3" label="Tab 3" />
       </q-tabs>-->
     </q-toolbar>
-  </div>
+  <!--</div>-->
 </template>
 
 <script>

@@ -1,4 +1,4 @@
-<template>
+<!--<template>
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
       <q-toolbar>
@@ -16,7 +16,7 @@
         </q-toolbar-title>
         <ToolBar/>
 
-        
+
 
         <div>Quasar v{{ $q.version }}</div>
       </q-toolbar>
@@ -123,3 +123,4 @@ export default defineComponent({
 </script>
 
 import ToolBar from "./components/ToolBar.vue";
+-->
