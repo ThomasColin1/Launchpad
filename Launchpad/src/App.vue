@@ -53,8 +53,8 @@ export default defineComponent({
   methods: {
     test: function(e : String){
       alert(e);
-      const but = document.getElementById('10');
-      but!.click();
+      //const but = document.getElementById('10');
+      //but!.click();
     }
   },
   created: function () {
