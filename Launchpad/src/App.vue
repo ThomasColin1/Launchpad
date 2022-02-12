@@ -39,16 +39,28 @@ import { defineComponent } from 'vue';
 import ToolBar from "./components/ToolBar.vue";
 import ToolBox from "./components/ToolBox.vue";
 import Launchpad from "./components/Launchpad.vue";
-
 import MainLayout from "./layouts/MainLayout.vue";
-
 export default defineComponent({
+
   name: 'App',
   components: {
     ToolBar,
     ToolBox,
     Launchpad,
     MainLayout
-  }
-})
+  },
+
+  methods: {
+    test: function(e : String){
+      alert(e);
+      const but = document.getElementById('10');
+      but!.click();
+    }
+  },
+  created: function () {
+
+          window.addEventListener('keyup', (event)=>this.test(event.key));
+                }
+  })
+;
 </script>

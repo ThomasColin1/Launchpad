@@ -1,5 +1,5 @@
 <template>
-  <q-btn col="0" :ln=ln />
+  <q-btn col="0" :ln=ln id="10" />
   <q-btn col="1" :ln=ln />
   <q-btn col="2" :ln=ln />
   <q-btn col="3" :ln=ln />
