@@ -52,9 +52,30 @@ export default defineComponent({
 
   methods: {
     test: function(e : String){
-      alert(e);
-      //const but = document.getElementById('10');
-      //but!.click();
+      //alert(e);
+      switch(e){
+        case "a": {
+          const but = document.getElementById('0');
+          but!.click();
+          break;
+        }
+        case "z": {
+          const but = document.getElementById('1');
+          but!.click();
+          break;
+        }
+        case "e": {
+          const but = document.getElementById('2');
+          but!.click();
+          break;
+        }
+        case "r": {
+          const but = document.getElementById('3');
+          but!.click();
+          break;
+        }
+      }
+
     }
   },
   created: function () {

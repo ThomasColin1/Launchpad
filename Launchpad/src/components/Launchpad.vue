@@ -3,7 +3,7 @@
   <div class="q-pa-md">
     <div class="wrapper" id="PadWrapper">
       <div v-for="b in buttons">
-        <q-btn :ln=b.ln :col=b.col :id=b.id :class=b.class v-on:click="myFunction()"></q-btn>
+        <q-btn :ln=b.ln :col=b.col :id=b.id :class=b.class v-on:click="myFunction(b.id)"></q-btn>
       </div>
     </div>
   </div>
@@ -33,9 +33,12 @@ export default {
 
   },
   methods: {
-    myFunction: function(){
-      var audio = new Audio(require('../assets/KickCut.mp3'));
-      audio.play();
+    myFunction: function(ButtonId){
+
+        var Son = "Drums";
+        var audio = new Audio(require("../assets/"+Son+"/"+ButtonId+".wav"));
+        audio.play();
+
     }
   },
   components: {
