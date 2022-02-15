@@ -1,5 +1,12 @@
 <template>
-  <q-btn :col=col :ln=ln :id=id :pad=pad v-on:click="playAudio()"  />
+  <q-btn :col=col :ln=ln :id=id :pad=pad v-on:click="playAudio()" >
+    <q-menu :context-menu="true" class="q-pa-md">
+      <p style="text-align:center;">Volume : </p>
+      <q-slider v-model="volume" :min="0" :max="100" style="width:200px" v-on:click="stopAudio()" />
+      <br/>
+      <q-btn v-on:click="stopAudio()" style="top:50%; left:50%; transform: translateX(-50%)"> stop </q-btn>
+    </q-menu>
+  </q-btn>
 </template>
 <!-- col > ln -->
 
@@ -8,6 +15,12 @@
 
   export default{
     name: "PadButton",
+    data(){
+      return{
+        volume: 50,
+        audio: new Audio()
+      }
+    },
     setup(){
 
     },
@@ -41,14 +54,25 @@
     methods: {
       playAudio: function(){
         if(this.personnalisable=="0"){
-          var audio = new Audio(require("../assets/"+this.pad+"/"+this.id+".wav"));
-          audio.play();
 
+          this.audio.pause();
+          this.audio = new Audio(require("../assets/"+this.pad+"/"+this.id+".wav"));
+          this.audio.volume = this.volume/100.0;
+          this.audio.play();
         }else{
-          var audio = new Audio(require("../assets/"+this.pad+".wav"));
-          audio.play();
+
+          this.audio.pause();
+          this.audio = new Audio(require("../assets/"+this.pad+".wav"));
+          this.audio.play();
         }
 
+      },
+      stopAudio: function(){
+        this.audio.pause();
+      },
+      test: function(e){
+        //e.preventDefault();
+        alert("test");
       }
     }
   }
