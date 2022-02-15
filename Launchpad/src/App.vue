@@ -3,11 +3,13 @@
 <q-layout view="lHh Lpr lFf">
 
 
-    <ToolBox />
+    <ToolBox
+    @instrument-choice="InstrumentChoice"
+    />
 
     <q-page-container>
       <ToolBar />
-      <Launchpad />
+      <Launchpad id="lnpad" :instrument=instrument />
     </q-page-container>
   </q-layout>
 
@@ -35,6 +37,7 @@
 
 
 <script lang="ts">
+import Vue from 'vue';
 import { defineComponent } from 'vue';
 import ToolBar from "./components/ToolBar.vue";
 import ToolBox from "./components/ToolBox.vue";
@@ -43,6 +46,12 @@ import MainLayout from "./layouts/MainLayout.vue";
 export default defineComponent({
 
   name: 'App',
+  data(){
+
+      return{
+        instrument:'Drums'
+      }
+  },
   components: {
     ToolBar,
     ToolBox,
@@ -74,13 +83,38 @@ export default defineComponent({
           but!.click();
           break;
         }
+        case "t": {
+          const but = document.getElementById('4');
+          but!.click();
+          break;
+        }
+        case "y": {
+          const but = document.getElementById('5');
+          but!.click();
+          break;
+        }
+        case "u": {
+          const but = document.getElementById('6');
+          but!.click();
+          break;
+        }
+        case "i": {
+          const but = document.getElementById('7');
+          but!.click();
+          break;
+        }
       }
 
-    }
+    },
+      InstrumentChoice: function(e: String){
+
+        this.instrument=e;
+
+      }
   },
   created: function () {
 
-          window.addEventListener('keyup', (event)=>this.test(event.key));
+          window.addEventListener('keypress', (event)=>this.test(event.key));
                 }
   })
 ;

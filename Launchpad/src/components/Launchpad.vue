@@ -3,9 +3,12 @@
   <div class="q-pa-md">
     <div class="wrapper" id="PadWrapper">
       <div v-for="b in buttons">
-        <q-btn :ln=b.ln :col=b.col :id=b.id :class=b.class v-on:click="myFunction(b.id)"></q-btn>
+        <PadButton :ln=b.ln :col=b.col :id=b.id :class=b.class :pad=instrument :personnalisable="0" />
+
       </div>
+
     </div>
+    <p style="text-align:center"><br/>-----{{instrument}}------</p>
   </div>
 
 </template>
@@ -14,6 +17,12 @@
 import PadButton from "./PadButton.vue";
 export default {
     name: "Launchpad",
+    props: {
+      instrument: {
+      type: String,
+      required: true
+      },
+    },
   computed: {
     buttons: function(){
       var BUT = [];
@@ -33,7 +42,7 @@ export default {
 
   },
   methods: {
-    myFunction: function(ButtonId){
+    myFunction: function(){
 
         var Son = "Drums";
         var audio = new Audio(require("../assets/"+Son+"/"+ButtonId+".wav"));

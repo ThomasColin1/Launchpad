@@ -15,6 +15,7 @@
           v-for="link in instrumentsList"
           :key="link.title"
           v-bind="link"
+          @instrument-choice="InstrumentChoice"
         />
     </q-list>
   </q-drawer>
@@ -26,15 +27,15 @@ import Instrument from "./Instrument.vue";
 
 const soundList = [
   {
-    title: 'Instruments',
+    title: 'Drums',
     caption: '',
-    icon: 'piano',
+    icon: 'drums',
     link: ''
   },
   {
-    title: 'Editing',
+    title: 'Piano',
     caption: '',
-    icon: 'create',
+    icon: 'piano',
     link: ''
   }
 ];
@@ -54,6 +55,11 @@ export default {
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
       }
+    }
+  },
+  methods: {
+    InstrumentChoice(e:any){
+      this.$emit("instrument-choice",e);
     }
   }
 }

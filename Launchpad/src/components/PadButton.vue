@@ -1,12 +1,16 @@
 <template>
-  <q-btn :col="col" :ln=ln :id=id />
+  <q-btn :col=col :ln=ln :id=id :pad=pad v-on:click="playAudio()"  />
 </template>
 <!-- col > ln -->
 
 
-<script lang="ts">
+<script lang='ts'>
 
-  export default {
+  export default{
+    name: "PadButton",
+    setup(){
+
+    },
     props: {
       ln:{
         type: String,
@@ -21,11 +25,31 @@
       id:{
         type: String,
         required: true,
-        default: '00'
+        default: '0'
+      },
+      pad:{
+        type: String,
+        required: false,
+        default: 'Drums'
+      },
+      personnalisable:{
+        type: String,
+        required: false,
+        default: '0'
       }
     },
-    name: "PadButton",
-    setup(){
+    methods: {
+      playAudio: function(){
+        if(this.personnalisable=="0"){
+          var audio = new Audio(require("../assets/"+this.pad+"/"+this.id+".wav"));
+          audio.play();
+
+        }else{
+          var audio = new Audio(require("../assets/"+this.pad+".wav"));
+          audio.play();
+        }
+
+      }
     }
   }
 </script>
