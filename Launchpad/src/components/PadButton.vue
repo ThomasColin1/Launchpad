@@ -5,6 +5,10 @@
       <q-slider v-model="volume" :min="0" :max="100" style="width:200px" v-on:click="stopAudio()" />
       <br/>
       <q-btn v-on:click="stopAudio()" style="top:50%; left:50%; transform: translateX(-50%)"> stop </q-btn>
+      <br/>
+      <q-btn v-on:click="loopAudio()" style="top:50%; left:50%; transform: translateX(-50%)"> loop </q-btn>
+      <br/>
+
     </q-menu>
   </q-btn>
 </template>
@@ -18,7 +22,8 @@
     data(){
       return{
         volume: 50,
-        audio: new Audio()
+        audio : [new Audio(), new Audio(),new Audio(),new Audio(),new Audio()]
+
       }
     },
     setup(){
@@ -53,24 +58,33 @@
     },
     methods: {
       playAudio: function(){
+          var numPadS = this.pad.charAt(0);
+          var numPad: number = parseInt(numPadS)-1;
         if(this.personnalisable=="0"){
 
-          this.audio.pause();
-          this.audio = new Audio(require("../assets/"+this.pad+"/"+this.id+".wav"));
-          this.audio.volume = this.volume/100.0;
-          this.audio.play();
+          this.audio[numPad].pause();
+          this.audio[numPad] = new Audio(require("../assets/"+this.pad+"/"+this.id+".wav"));
+          this.audio[numPad].volume = this.volume/100.0;
+          this.audio[numPad].play();
         }else{
 
-          this.audio.pause();
-          this.audio = new Audio(require("../assets/"+this.pad+".wav"));
-          this.audio.play();
+          this.audio[numPad].pause();
+          this.audio[numPad] = new Audio(require("../assets/"+this.pad+".wav"));
+          this.audio[numPad].play();
         }
-
-      },
+        },
       stopAudio: function(){
-        this.audio.pause();
+          var numPadS = this.pad.charAt(0);
+          var numPad: number = parseInt(numPadS)-1;
+        this.audio[numPad].pause();
       },
-      test: function(e){
+      loopAudio: function(){
+          var numPadS = this.pad.charAt(0);
+          var numPad: number = parseInt(numPadS)-1;
+        this.audio[numPad].play();
+        this.audio[numPad].loop = true;
+      },
+      ResetPad : function(){
         //e.preventDefault();
         alert("test");
       }

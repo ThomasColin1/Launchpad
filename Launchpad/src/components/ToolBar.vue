@@ -1,7 +1,7 @@
 <template>
   <!--<div class="q-pa-md">-->
     <q-toolbar class="bg-black text-white shadow-2 rounded-borders" >
-      <q-btn flat label="Reset" id="reset"/>
+      <q-btn flat label="Reset" id="reset" v-on:click="ResetEmitter()"/>
       <!--<q-space />-->
 
       <!--
@@ -17,8 +17,13 @@
   <!--</div>-->
 </template>
 
-<script>
+<script lang="ts">
 export default {
-  name: "ToolBar"
+  name: "ToolBar",
+  methods : {
+    ResetEmitter(e:any){
+      this.$emit("reset");
+    }
+  }
 }
 </script>

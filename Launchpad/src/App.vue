@@ -8,8 +8,10 @@
     />
 
     <q-page-container>
-      <ToolBar />
-      <Launchpad id="lnpad" :instrument=instrument />
+      <ToolBar
+      @reset="Reset"
+      />
+      <Launchpad id="lnpad" :instrument=instrument ref="Launchpad" />
     </q-page-container>
   </q-layout>
 
@@ -49,7 +51,7 @@ export default defineComponent({
   data(){
 
       return{
-        instrument:'Drums'
+        instrument:'1 - Classic Drums'
       }
   },
   components: {
@@ -109,6 +111,11 @@ export default defineComponent({
       InstrumentChoice: function(e: String){
 
         this.instrument=e;
+
+      },
+      Reset: function(){
+        alert('a');
+        this.$refs.Launchpad.Reset();
 
       }
   },

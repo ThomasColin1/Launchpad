@@ -27,15 +27,33 @@ import Instrument from "./Instrument.vue";
 
 const soundList = [
   {
-    title: 'Drums',
+    title: '1 - Classic Drums',
     caption: '',
-    icon: 'drums',
+    icon: 'fas fa-drum',
     link: ''
   },
   {
-    title: 'Piano',
+    title: '2 - Future Drums',
     caption: '',
-    icon: 'piano',
+    icon: 'watch',
+    link: ''
+  },
+  {
+    title: '3 - 808 Drums',
+    caption: '',
+    icon: 'loop',
+    link: ''
+  },
+  {
+    title: '4 - Sounds',
+    caption:'',
+    icon: 'volume_up',
+    link: ''
+  },
+  {
+    title: '5 - Samples',
+    caption: '',
+    icon: 'album',
     link: ''
   }
 ];

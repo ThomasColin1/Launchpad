@@ -3,7 +3,7 @@
   <div class="q-pa-md">
     <div class="wrapper" id="PadWrapper">
       <div v-for="b in buttons">
-        <PadButton :ln=b.ln :col=b.col :id=b.id :class=b.class :pad=instrument :personnalisable="0" />
+        <PadButton ref="Padbutton" :ln=b.ln :col=b.col :id=b.id :class=b.class :pad=instrument :personnalisable="0"  />
 
       </div>
 
@@ -41,17 +41,15 @@ export default {
     }
 
   },
-  methods: {
-    myFunction: function(){
 
-        var Son = "Drums";
-        var audio = new Audio(require("../assets/"+Son+"/"+ButtonId+".wav"));
-        audio.play();
-
-    }
-  },
   components: {
     PadButton,
+  },
+  methods: {
+    Reset : function(){
+      alert('aa');
+      this.$refs.Padbutton.ResetPad();
+    }
   },
   setup(){
   }
