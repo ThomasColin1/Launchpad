@@ -85,8 +85,9 @@
         this.audio[numPad].loop = true;
       },
       ResetPad : function(){
-        //e.preventDefault();
-        alert("test");
+        for (let i=0; i<this.audio.length;i++){
+          this.audio[i].pause();
+        }
       }
     }
   }

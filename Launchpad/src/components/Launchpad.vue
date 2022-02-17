@@ -17,6 +17,11 @@
 import PadButton from "./PadButton.vue";
 export default {
     name: "Launchpad",
+    data(){
+      return{
+        buttonNumber : 64
+      }
+    },
     props: {
       instrument: {
       type: String,
@@ -28,7 +33,7 @@ export default {
       var BUT = [];
       let ln=0;
       let col=0;
-      for (let i = 0; i < 64; i++) {
+      for (let i = 0; i < this.buttonNumber; i++) {
           let newBut = {
             id:i.toString(),
             ln:Math.floor(i/8.0).toString(),
@@ -47,8 +52,9 @@ export default {
   },
   methods: {
     Reset : function(){
-      alert('aa');
-      this.$refs.Padbutton.ResetPad();
+      for (let i = 0; i < this.buttonNumber; i++) {
+        this.$refs.Padbutton[i].ResetPad();
+      }
     }
   },
   setup(){

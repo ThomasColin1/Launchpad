@@ -114,9 +114,7 @@ export default defineComponent({
 
       },
       Reset: function(){
-        alert('a');
         this.$refs.Launchpad.Reset();
-
       }
   },
   created: function () {
