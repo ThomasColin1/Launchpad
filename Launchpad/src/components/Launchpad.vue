@@ -8,7 +8,7 @@
       </div>
 
     </div>
-    <p style="text-align:center"><br/>-----{{instrument}}------</p>
+    <p style="text-align:center; font-family: 'Times New Roman', Times, serif; font-size:18px"><br/>Actually selected : {{instrument}}</p>
   </div>
 
 </template>

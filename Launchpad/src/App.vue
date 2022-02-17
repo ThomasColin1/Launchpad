@@ -1,6 +1,6 @@
 
 <template>
-<q-layout view="lHh Lpr lFf">
+<q-layout view="lHh Lpr lFf" >
 
 
     <ToolBox
@@ -102,6 +102,46 @@ export default defineComponent({
         }
         case "i": {
           const but = document.getElementById('7');
+          but!.click();
+          break;
+        }
+        case "q": {
+          const but = document.getElementById('8');
+          but!.click();
+          break;
+        }
+        case "s": {
+          const but = document.getElementById('9');
+          but!.click();
+          break;
+        }
+        case "d": {
+          const but = document.getElementById('10');
+          but!.click();
+          break;
+        }
+        case "f": {
+          const but = document.getElementById('11');
+          but!.click();
+          break;
+        }
+        case "g": {
+          const but = document.getElementById('12');
+          but!.click();
+          break;
+        }
+        case "h": {
+          const but = document.getElementById('13');
+          but!.click();
+          break;
+        }
+        case "j": {
+          const but = document.getElementById('14');
+          but!.click();
+          break;
+        }
+        case "k": {
+          const but = document.getElementById('15');
           but!.click();
           break;
         }

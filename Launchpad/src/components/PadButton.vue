@@ -1,13 +1,16 @@
 <template>
-  <q-btn :col=col :ln=ln :id=id :pad=pad v-on:click="playAudio()" >
+  <q-btn :col=col :ln=ln :id=id :pad=pad v-on:click="playAudio()" @contextmenu="updateLoopColor()"  >
+    <!-- <q-icon name="loop" color="grey" :style="loopIcon" /> -->
     <q-menu :context-menu="true" class="q-pa-md">
       <p style="text-align:center;">Volume : </p>
-      <q-slider v-model="volume" :min="0" :max="100" style="width:200px" v-on:click="stopAudio()" />
+      <q-slider v-model="volume" :min="0" :max="100" style="width:200px" />
       <br/>
-      <q-btn v-on:click="stopAudio()" style="top:50%; left:50%; transform: translateX(-50%)"> stop </q-btn>
+      <div style="line-height:40px;">
+      <q-btn v-on:click="stopAudio()" style="top:50%; left:50%; transform: translateX(-50%);"> stop </q-btn>
       <br/>
-      <q-btn v-on:click="loopAudio()" style="top:50%; left:50%; transform: translateX(-50%)"> loop </q-btn>
+      <q-btn v-on:click="loopAudio()" style="top:50%; left:50%; transform: translateX(-50%);" :id="'Loop '+id" :color="loopColor" > loop </q-btn>
       <br/>
+      </div>
 
     </q-menu>
   </q-btn>
@@ -22,8 +25,9 @@
     data(){
       return{
         volume: 50,
-        audio : [new Audio(), new Audio(),new Audio(),new Audio(),new Audio()]
-
+        audio : [new Audio(), new Audio(),new Audio(),new Audio(),new Audio()],
+        loopColor : "primary",
+        //loopIcon : "display : none"
       }
     },
     setup(){
@@ -82,7 +86,20 @@
           var numPadS = this.pad.charAt(0);
           var numPad: number = parseInt(numPadS)-1;
         this.audio[numPad].play();
-        this.audio[numPad].loop = true;
+        this.audio[numPad].loop = !this.audio[numPad].loop;
+        this.updateLoopColor();
+      },
+      updateLoopColor: function(){
+          var numPadS = this.pad.charAt(0);
+          var numPad: number = parseInt(numPadS)-1;
+        if(this.audio[numPad].loop){
+          this.loopColor="secondary";
+          //this.loopIcon="display:block";
+        }else{
+          this.loopColor="primary";
+          //this.loopIcon="display:none";
+        }
+        return this.loopColor;
       },
       ResetPad : function(){
         for (let i=0; i<this.audio.length;i++){
