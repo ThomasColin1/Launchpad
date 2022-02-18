@@ -33,25 +33,7 @@ const soundList = [
     link: ''
   },
   {
-    title: '2 - Future Drums',
-    caption: '',
-    icon: 'watch',
-    link: ''
-  },
-  {
-    title: '3 - 808 Drums',
-    caption: '',
-    icon: 'loop',
-    link: ''
-  },
-  {
-    title: '4 - Sounds',
-    caption:'',
-    icon: 'volume_up',
-    link: ''
-  },
-  {
-    title: '5 - Samples',
+    title: '2 - Samples',
     caption: '',
     icon: 'album',
     link: ''

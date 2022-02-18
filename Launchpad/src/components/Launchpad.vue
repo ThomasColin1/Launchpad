@@ -8,7 +8,7 @@
       </div>
 
     </div>
-    <p style="text-align:center; font-family: 'Times New Roman', Times, serif; font-size:18px"><br/>Actually selected : {{instrument}}</p>
+    <p style="text-align:center; font-family: 'Calibri', Times, sans-serif; font-size:18px"><br/>Actually selected : {{instrument}}<br/>Right-click on pad for options</p>
   </div>
 
 </template>
