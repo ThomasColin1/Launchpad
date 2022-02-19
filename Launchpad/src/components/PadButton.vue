@@ -67,13 +67,13 @@
         if(this.personnalisable=="0"){
 
           this.audio[numPad].pause();
-          this.audio[numPad] = new Audio(require("../assets/"+this.pad+"/"+this.id+".wav"));
+          this.audio[numPad] = new Audio(require("../assets/"+this.pad+"/"+this.id+".mp3"));
           this.audio[numPad].volume = this.volume/100.0;
           this.audio[numPad].play();
         }else{
 
           this.audio[numPad].pause();
-          this.audio[numPad] = new Audio(require("../assets/"+this.pad+".wav"));
+          this.audio[numPad] = new Audio(require("../assets/"+this.pad+".mp3"));
           this.audio[numPad].play();
         }
         },
