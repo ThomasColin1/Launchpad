@@ -13,7 +13,7 @@
 
 </template>
 
-<script>
+<script lang="ts">
 import PadButton from "./PadButton.vue";
 export default {
     name: "Launchpad",
@@ -21,6 +21,12 @@ export default {
       return{
         buttonNumber : 64
       }
+    },
+    mounted: function () {
+      window.setInterval(() => {
+        const but = document.getElementById('8');
+
+      }, 1000)
     },
     props: {
       instrument: {
@@ -37,7 +43,7 @@ export default {
           let newBut = {
             id:i.toString(),
             ln:Math.floor(i/8.0).toString(),
-            col:i%8.0.toString(),
+            col:(i%(8.0)).toString(),
             class:"PadElement"
           };
           BUT.push(newBut);

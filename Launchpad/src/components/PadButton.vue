@@ -55,7 +55,7 @@
         default: 'Drums'
       },
       personnalisable:{
-        type: String,
+        type: Number,
         required: false,
         default: '0'
       }
