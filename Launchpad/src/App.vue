@@ -44,7 +44,6 @@ import { defineComponent } from 'vue';
 import ToolBar from "./components/ToolBar.vue";
 import ToolBox from "./components/ToolBox.vue";
 import Launchpad from "./components/Launchpad.vue";
-import MainLayout from "./layouts/MainLayout.vue";
 export default defineComponent({
 
   name: 'App',
@@ -57,8 +56,7 @@ export default defineComponent({
   components: {
     ToolBar,
     ToolBox,
-    Launchpad,
-    MainLayout
+    Launchpad
   },
 
   methods: {
