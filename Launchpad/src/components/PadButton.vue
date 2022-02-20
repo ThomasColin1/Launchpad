@@ -1,9 +1,9 @@
 <template>
-  <q-btn :col=col :ln=ln :id=id :pad=pad v-on:click="playAudio()" @contextmenu="updateLoopColor()"  >
+  <q-btn :col=col :ln=ln :id=id :pad=pad v-on:click="playAudio()"  @contextmenu="updateLoopColor(); updateVolume();" >
     <!-- <q-icon name="loop" color="grey" :style="loopIcon" /> -->
     <q-menu :context-menu="true" class="q-pa-md">
       <p style="text-align:center;">Volume : </p>
-      <q-slider v-model="volume" :min="0" :max="100" style="width:200px" />
+      <q-slider id="volume" v-model="volume" :min="0" :max="100" style="width:200px" v-on:click="changeVolume()" />
       <br/>
       <div style="line-height:40px;">
       <q-btn v-on:click="stopAudio()" style="top:50%; left:50%; transform: translateX(-50%);"> stop </q-btn>
@@ -19,7 +19,6 @@
 
 
 <script lang='ts'>
-
   export default{
     name: "PadButton",
     data(){
@@ -31,7 +30,20 @@
       }
     },
     setup(){
-
+    },
+    mounted(){
+      try{
+      this.audio[0] = new Audio(require("../assets/"+"1 - Classic Drums"+"/"+this.id+".mp3"));
+      }catch(error){
+        console.log("../assets/"+"1 - Classic Drums"+"/"+this.id+".mp3  :  not loaded");
+      }
+      this.audio[0].volume = 0.5;
+      try{
+      this.audio[1] = new Audio(require("../assets/"+"2 - Samples"+"/"+this.id+".mp3"));
+      }catch(error){
+        console.log("../assets/"+"2 - Samples"+"/"+this.id+".mp3  :  not loaded");
+      }
+      this.audio[1].volume = 0.5;
     },
     props: {
       ln:{
@@ -67,13 +79,15 @@
         if(this.personnalisable=="0"){
 
           this.audio[numPad].pause();
-          this.audio[numPad] = new Audio(require("../assets/"+this.pad+"/"+this.id+".mp3"));
-          this.audio[numPad].volume = this.volume/100.0;
+          //this.audio[numPad] = new Audio(require("../assets/"+this.pad+"/"+this.id+".mp3"));
+          //this.audio[numPad].volume = this.volume/100.0;
+          this.audio[numPad].currentTime=0;
           this.audio[numPad].play();
         }else{
 
           this.audio[numPad].pause();
-          this.audio[numPad] = new Audio(require("../assets/"+this.pad+".mp3"));
+          //this.audio[numPad] = new Audio(require("../assets/"+this.pad+".mp3"));
+          this.audio[numPad].currentTime=0;
           this.audio[numPad].play();
         }
         },
@@ -100,6 +114,17 @@
           //this.loopIcon="display:none";
         }
         return this.loopColor;
+      },
+      updateVolume: function(){
+        var numPadS = this.pad.charAt(0);
+        var numPad: number = parseInt(numPadS)-1;
+        var vol = document.getElementById('volume');
+        this.volume=Math.floor(this.audio[numPad].volume*100);
+      },
+      changeVolume: function(){
+        var numPadS = this.pad.charAt(0);
+        var numPad: number = parseInt(numPadS)-1;
+        this.audio[numPad].volume = this.volume/100.0;
       },
       ResetPad : function(){
         for (let i=0; i<this.audio.length;i++){
