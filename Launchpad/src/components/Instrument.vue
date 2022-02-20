@@ -36,12 +36,12 @@ export default defineComponent({
     caption: {
       type: String,
       default: ''
-    },
+    }, //For later use, description of the instrument
 
     link: {
       type: String,
       default: '#'
-    },
+    }, //For later use if links implemented in toolBox
 
     icon: {
       type: String,
@@ -49,7 +49,7 @@ export default defineComponent({
     }
   },
   methods:{
-    emitter(event:any){
+    emitter(event:any){ //Sends the instrument choice to App
       this.$emit("instrument-choice",this.title);
     }
   }

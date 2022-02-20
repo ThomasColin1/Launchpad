@@ -1,6 +1,5 @@
 <template>
 <q-drawer
-      v-model="leftDrawerOpen"
       show-if-above
       bordered
     >
@@ -25,7 +24,7 @@
 import { ref } from 'vue';
 import Instrument from "./Instrument.vue";
 
-const soundList = [
+const soundList = [ //List of instruments
   {
     title: '1 - Classic Drums',
     caption: '',
@@ -47,19 +46,14 @@ export default {
   },
 
   setup () {
-    const leftDrawerOpen = ref(true)
 
     return {
       instrumentsList: soundList,
-      leftDrawerOpen,
-      toggleLeftDrawer () {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      }
     }
   },
   methods: {
     InstrumentChoice(e:any){
-      this.$emit("instrument-choice",e);
+      this.$emit("instrument-choice",e); //Sends chosen instrument to App
     }
   }
 }

@@ -51,7 +51,7 @@ export default defineComponent({
   data(){
 
       return{
-        instrument:'1 - Classic Drums'
+        instrument:'1 - Classic Drums' //Origin instrument
       }
   },
   components: {
@@ -62,8 +62,8 @@ export default defineComponent({
   },
 
   methods: {
-    test: function(e : String){
-      //alert(e);
+    clavier: function(e : String){ //Gestion du clavier pour les deux premieres lignes du pad
+
       switch(e){
         case "a": {
           const but = document.getElementById('0');
@@ -148,18 +148,17 @@ export default defineComponent({
       }
 
     },
+
       InstrumentChoice: function(e: String){
-
-        this.instrument=e;
-
+        this.instrument=e; //Gets instrument for ToolBox and give it to Launchpad by props
       },
-      Reset: function(){
+
+      Reset: function(){ //Sends reset order to Launchpad
         this.$refs.Launchpad.Reset();
       }
   },
   created: function () {
-
-          window.addEventListener('keypress', (event)=>this.test(event.key));
+          window.addEventListener('keypress', (event)=>this.clavier(event.key));
                 }
   })
 ;

@@ -19,23 +19,17 @@ export default {
     name: "Launchpad",
     data(){
       return{
-        buttonNumber : 64
+        buttonNumber : 64 //To be able to change the pad size
       }
     },
-    mounted: function () {
-      window.setInterval(() => {
-        const but = document.getElementById('8');
-
-      }, 1000)
-    },
     props: {
-      instrument: {
+      instrument: { //The actual chosen pad
       type: String,
       required: true
       },
     },
   computed: {
-    buttons: function(){
+    buttons: function(){ //Creates the props for each pad button
       var BUT = [];
       let ln=0;
       let col=0;
@@ -56,10 +50,11 @@ export default {
   components: {
     PadButton,
   },
+
   methods: {
     Reset : function(){
       for (let i = 0; i < this.buttonNumber; i++) {
-        this.$refs.Padbutton[i].ResetPad();
+        this.$refs.Padbutton[i].ResetPad(); //Sends reset order to the pad buttons
       }
     }
   },
