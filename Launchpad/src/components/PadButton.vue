@@ -29,6 +29,7 @@
     setup(){
     },
     mounted(){ //Charge sounds when mounted and not on click, for no latency
+    console.log(this.id);
       try{ //verify file existence
       this.audio[0] = new Audio(require("../assets/"+"1 - Classic Drums"+"/"+this.id+".mp3"));
       }catch(error){
@@ -64,23 +65,16 @@
         required: false,
         default: 'Drums'
       },
-      personnalisable:{ //For later use (implementation of personnalisable pad)
-        type: Number,
-        required: false,
-        default: '0'
-      }
     },
     methods: {
       playAudio: function(){ // Start sound at button click
           var numPadS = this.pad.charAt(0);
           var numPad: number = parseInt(numPadS)-1;
-        if(this.personnalisable=="0"){
+          console.log("play "+this.id);
           this.audio[numPad].pause();
           this.audio[numPad].currentTime=0;
           this.audio[numPad].play();
-        }else{
           //To be implemented
-        }
         },
       stopAudio: function(){ //Stops sounds at click on stop button
           var numPadS = this.pad.charAt(0);

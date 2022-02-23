@@ -2,10 +2,11 @@
 <template>
   <div class="q-pa-md">
     <div class="wrapper" id="PadWrapper">
-      <div v-for="b in buttons">
-        <PadButton ref="Padbutton" :ln=b.ln :col=b.col :id=b.id :class=b.class :pad=instrument :personnalisable="0"  />
-
-      </div>
+      <template v-for="y in sizeY">
+        <div v-for="x in sizeX">
+        <PadButton ref="Padbutton" :ln=(y-1).toString() :col=(x-1).toString() :id=((x-1)+(y-1)*8).toString() class="PadElement" :pad=instrument />
+        </div>
+      </template>
 
     </div>
     <p style="text-align:center; font-family: 'Calibri', Times, sans-serif; font-size:18px"><br/>Actually selected : {{instrument}}<br/>Right-click on pad for options</p>
@@ -19,7 +20,9 @@ export default {
     name: "Launchpad",
     data(){
       return{
-        buttonNumber : 64 //To be able to change the pad size
+        buttonNumber : 64, //To be able to change the pad size
+        sizeX: 8,
+        sizeY: 8,
       }
     },
     props: {
@@ -28,24 +31,6 @@ export default {
       required: true
       },
     },
-  computed: {
-    buttons: function(){ //Creates the props for each pad button
-      var BUT = [];
-      let ln=0;
-      let col=0;
-      for (let i = 0; i < this.buttonNumber; i++) {
-          let newBut = {
-            id:i.toString(),
-            ln:Math.floor(i/8.0).toString(),
-            col:(i%(8.0)).toString(),
-            class:"PadElement"
-          };
-          BUT.push(newBut);
-      }
-      return BUT;
-    }
-
-  },
 
   components: {
     PadButton,
