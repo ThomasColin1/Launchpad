@@ -14,17 +14,26 @@
           v-for="link in instrumentsList"
           :key="link.title"
           v-bind="link"
-          @instrument-choice="InstrumentChoice"
+          @instrumentChoice="InstrumentChoice"
         />
     </q-list>
   </q-drawer>
 </template>
 
 <script lang="ts">
-import { ref } from 'vue';
+import {Component, Emit, Vue} from "vue-property-decorator"
 import Instrument from "./Instrument.vue";
 
-const soundList = [ //List of instruments
+
+
+@Component({
+  components: {
+    Instrument,
+  }
+})
+export default class ToolBox extends Vue{
+
+  public instrumentsList = [ //List of instruments
   {
     title: '1 - Classic Drums',
     caption: '',
@@ -38,23 +47,9 @@ const soundList = [ //List of instruments
     link: ''
   }
 ];
-
-export default {
-  name: "ToolBox",
-  components: {
-    Instrument,
-  },
-
-  setup () {
-
-    return {
-      instrumentsList: soundList,
-    }
-  },
-  methods: {
-    InstrumentChoice(e:any){
-      this.$emit("instrument-choice",e); //Sends chosen instrument to App
-    }
+  @Emit("instrumentChoice")
+  InstrumentChoice(e:any) { //Sends chosen instrument to App
+    return(e);
   }
 }
 </script>

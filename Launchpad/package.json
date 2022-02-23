@@ -1,27 +1,23 @@
 {
   "name": "launchpad",
   "version": "0.0.1",
-  "description": "Launchpad - for Tokatab",
-  "productName": "launchpad",
-  "author": "Colin Thomas",
+  "description": "A launchpad for tokatab",
+  "productName": "Launchpad",
+  "author": "Thomas Colin <79255127+ThomasColin1@users.noreply.github.com>",
   "private": true,
   "scripts": {
-    "test": "echo \"No test specified\" && exit 0",
-    "build": "quasar build"
+    "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
     "core-js": "^3.6.5",
-    "fs": "^0.0.1-security",
-    "vue": "^3.2.31",
-    "vue-class-component": "^7.2.6",
-    "vue-router": "^4.0.0",
-    "vuex": "^4.0.1"
+    "quasar": "^1.0.0",
+    "vue-class-component": "^7.2.2",
+    "vue-property-decorator": "^8.3.0"
   },
   "devDependencies": {
-    "@quasar/app": "^3.0.0",
-    "@types/node": "^12.20.21",
-    "strip-ansi": "^3.0.1"
+    "@quasar/app": "^2.0.0",
+    "@types/node": "^10.17.15"
   },
   "browserslist": [
     "last 10 Chrome versions",
@@ -35,13 +31,8 @@
     "last 5 Opera versions"
   ],
   "engines": {
-    "node": ">= 12.22.1",
+    "node": ">= 10.18.1",
     "npm": ">= 6.13.4",
     "yarn": ">= 1.21.1"
-  },
-  "browser": {
-    "fs": false,
-    "path": false,
-    "os": false
   }
 }

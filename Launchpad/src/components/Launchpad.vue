@@ -30,35 +30,28 @@
 </template>
 
 <script lang="ts">
+import {Component, Prop, Vue, Ref} from "vue-property-decorator"
 import PadButton from "./PadButton.vue";
-export default {
-    name: "Launchpad",
-    data(){
-      return{
-        buttonNumber : 64, //To be able to change the pad size
-        sizeX: 8,
-        sizeY: 8,
-      }
-    },
-    props: {
-      instrument: { //The actual chosen pad
-      type: String,
-      required: true
-      },
-    },
 
+@Component({
   components: {
     PadButton,
-  },
+  }
+})
+export default class Launchpad extends Vue{
 
-  methods: {
-    Reset : function(){
+  private buttonNumber = 64;
+  public sizeX = 8;
+  public sizeY = 8;
+
+
+  @Prop(String) readonly instrument!: string | "0"
+
+  @Ref() Padbutton!: PadButton[]
+    Reset(){
       for (let i = 0; i < this.buttonNumber; i++) {
-        this.$refs.Padbutton[i].ResetPad(); //Sends reset order to the pad buttons
+        this.Padbutton[i].ResetPad(); //Sends reset order to the pad buttons
       }
     }
-  },
-  setup(){
-  }
 }
 </script>

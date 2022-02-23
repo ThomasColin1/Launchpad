@@ -5,12 +5,13 @@
 </template>
 
 <script lang="ts">
-export default {
-  name: "ToolBar",
-  methods : {
-    ResetEmitter(e:any){ //Sends reset order to App
-      this.$emit("reset");
+import {Component, Emit, Vue} from "vue-property-decorator"
+@Component
+export default class ToolBar extends Vue{
+
+    @Emit('reset')
+    ResetEmitter() { //Sends reset order to the App
+      return("reset");
     }
-  }
 }
 </script>

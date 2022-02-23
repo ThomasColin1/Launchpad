@@ -23,35 +23,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import {Component, Prop, Vue, Emit} from "vue-property-decorator"
+@Component
+export default class Instrument extends Vue{
 
-export default defineComponent({
-  name: 'Instrument',
-  props: {
-    title: {
-      type: String,
-      required: true
-    },
+  @Prop(String) readonly title!: String
+  @Prop(String) readonly caption!: String
+  @Prop(String) readonly link!: String
+  @Prop(String) readonly icon!: String
 
-    caption: {
-      type: String,
-      default: ''
-    }, //For later use, description of the instrument
-
-    link: {
-      type: String,
-      default: '#'
-    }, //For later use if links implemented in toolBox
-
-    icon: {
-      type: String,
-      default: ''
-    }
-  },
-  methods:{
-    emitter(event:any){ //Sends the instrument choice to App
-      this.$emit("instrument-choice",this.title);
-    }
+  @Emit("instrumentChoice")
+  emitter() { //Sends chosen instrument to App
+    return(this.title);
   }
-})
+}
 </script>

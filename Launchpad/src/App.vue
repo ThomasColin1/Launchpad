@@ -1,17 +1,17 @@
 
-<template>
+<template id="q-app" >
 <q-layout view="lHh Lpr lFf" >
 
 
     <ToolBox
-    @instrument-choice="InstrumentChoice"
+    @instrumentChoice="InstrumentChoice"
     />
 
     <q-page-container>
       <ToolBar
-      @reset="Reset"
+      @reset="Reset()"
       />
-      <Launchpad id="lnpad" :instrument=instrument ref="Launchpad" />
+      <Launchpad id="lnpad" :instrument="instrument" ref="Launchpad" />
     </q-page-container>
   </q-layout>
 
@@ -39,28 +39,21 @@
 
 
 <script lang="ts">
-import Vue from 'vue';
-import { defineComponent } from 'vue';
+import {Component, Vue, Ref} from "vue-property-decorator"
 import ToolBar from "./components/ToolBar.vue";
 import ToolBox from "./components/ToolBox.vue";
 import Launchpad from "./components/Launchpad.vue";
-export default defineComponent({
 
-  name: 'App',
-  data(){
-
-      return{
-        instrument:'1 - Classic Drums' //Origin instrument
-      }
-  },
+@Component({
   components: {
     ToolBar,
     ToolBox,
     Launchpad
-  },
-
-  methods: {
-    clavier: function(e : String){ //Gestion du clavier pour les deux premieres lignes du pad
+  }
+})
+export default class App extends Vue{
+  public instrument: String = "1 - Classic Drums";
+    clavier(e : String){ //Gestion du clavier pour les deux premieres lignes du pad
 
       switch(e){
         case "a": {
@@ -145,19 +138,18 @@ export default defineComponent({
         }
       }
 
-    },
+    }
 
-      InstrumentChoice: function(e: String){
+      InstrumentChoice(e: String){
         this.instrument=e; //Gets instrument for ToolBox and give it to Launchpad by props
-      },
-
-      Reset: function(){ //Sends reset order to Launchpad
-        this.$refs.Launchpad.Reset();
       }
-  },
-  created: function () {
+
+@Ref() Launchpad!: Launchpad
+      Reset(){ //Sends reset order to Launchpad
+        this.Launchpad.Reset();
+      }
+  created () {
           window.addEventListener('keypress', (event)=>this.clavier(event.key));
                 }
-  })
-;
+  }
 </script>

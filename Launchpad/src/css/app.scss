@@ -1,17 +1,5 @@
 // app global css in SCSS form
 .wrapper{
-   //color: red;
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  grid-gap: 15px;
-  //grid-auto-rows: minmax(100px, auto);
-  height: 700px;
-  width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/*.wrapper div{
   //color: red;
  display: grid;
  grid-template-columns: repeat(8, 1fr);
@@ -21,59 +9,75 @@
  width: 700px;
  margin-left: auto;
  margin-right: auto;
-}*/
+}
 
 .Loop-Activated{
-  color: green;
+ color: green;
 }
 
 .PadElement{
-  width:100%;
-  height:100%;
+ width:100%;
+ height:100%;
 }
 
 [ln="0"]{
-  color: blue;
-  //background-color: blue;
+ color: blue;
+ //background-color: blue;
 }
 
 
-#reset{
-  display:block;
-  margin-left: auto;
-  margin-right: auto;
+#reset, #play, #packRecord, #shortcuts{
+ display:block;
+ margin-left: auto;
+ margin-right: auto;
+}
+
+.recordButton:hover{
+ color:rgb(163, 19, 0);
+}
+.recordButtonText{
+ display:block;
+}
+.recordButton:hover .recordButtonText{
+ display:none;
+}
+.erase{
+ display:none;
+}
+.recordButton:hover .erase{
+ display: block;
 }
 
 
 [col="7"]{
-  color: rgb(255, 0, 0);
-  background-color: rgba(255, 0, 0, 0.363);
+ color: rgb(255, 0, 0);
+ background-color: rgba(255, 0, 0, 0.363);
 }
 [col="6"]{
-  color: rgb(255, 0, 0);
-  background-color: rgba(255, 30, 0, 0.363);
+ color: rgb(255, 0, 0);
+ background-color: rgba(255, 30, 0, 0.363);
 }
 [col="5"]{
-  color: rgb(255, 0, 0);
-  background-color: rgba(255, 38, 0, 0.363);
+ color: rgb(255, 0, 0);
+ background-color: rgba(255, 38, 0, 0.363);
 }
 [col="4"]{
-  color: rgb(255, 0, 0);
-  background-color: rgba(255, 72, 0, 0.363);
+ color: rgb(255, 0, 0);
+ background-color: rgba(255, 72, 0, 0.363);
 }
 [col="3"]{
-  color: rgb(255, 0, 0);
-  background-color: rgba(255, 102, 0, 0.363);
+ color: rgb(255, 0, 0);
+ background-color: rgba(255, 102, 0, 0.363);
 }
 [col="2"]{
-  color: rgb(255, 0, 0);
-  background-color: rgba(255, 123, 0, 0.363);
+ color: rgb(255, 0, 0);
+ background-color: rgba(255, 123, 0, 0.363);
 }
 [col="1"]{
-  color: rgb(255, 0, 0);
-  background-color: rgba(255, 145, 0, 0.363);
+ color: rgb(255, 0, 0);
+ background-color: rgba(255, 145, 0, 0.363);
 }
 [col="0"]{
-  color: rgb(255, 0, 0);
-  background-color: rgba(255, 166, 0, 0.363);
+ color: rgb(255, 0, 0);
+ background-color: rgba(255, 166, 0, 0.363);
 }

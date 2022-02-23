@@ -1,13 +1,13 @@
 <template>
-  <q-btn :col=col :ln=ln :id=id :pad=pad v-on:click="playAudio()"  @contextmenu="updateLoopColor(); updateVolume();" >
+  <q-btn :col="col" :ln="ln" :id="id" :pad="pad" v-on:click="playAudio()"  @contextmenu="updateLoopColor(); updateVolume();" >
     <q-menu :context-menu="true" class="q-pa-md">
-      <p style="text-align:center;">Volume : </p>
+      <p style="text-align:center;" >Volume : </p>
       <q-slider id="volume" v-model="volume" :min="0" :max="100" style="width:200px" v-on:click="changeVolume()" />
       <br/>
-      <div style="line-height:40px;">
-      <q-btn v-on:click="stopAudio()" style="top:50%; left:50%; transform: translateX(-50%);"> stop </q-btn>
-      <br/>
-      <q-btn v-on:click="loopAudio()" style="top:50%; left:50%; transform: translateX(-50%);" :id="'Loop '+id" :color="loopColor" > loop </q-btn>
+      <div style="line-height:40px;" >
+        <q-btn v-on:click="stopAudio()" style="top:50%; left:50%; transform: translateX(-50%);"> stop </q-btn>
+        <br/>
+        <q-btn v-on:click="loopAudio()" style="top:50%; left:50%; transform: translateX(-50%);" :id="'Loop '+id" :color="loopColor" > loop </q-btn>
       <br/>
       </div>
 
@@ -20,13 +20,13 @@
 import {Component, Prop, Vue} from "vue-property-decorator"
 @Component
 export default class PadButton extends Vue {
-  @Prop(String) readonly ln: string | "0"
-  @Prop(String) readonly col: string | "0"
-  @Prop(String) readonly id: string | "0"
-  @Prop(String) readonly pad: string | "Drums"
+  @Prop(String) readonly ln!: string | "0"
+  @Prop(String) readonly col!: string | "0"
+  @Prop(String) readonly id!: string | "0"
+  @Prop(String) readonly pad!: string | "Drums"
 
 
-  private volume: Number = 50; //Origin volume
+  public volume: Number = 50; //Origin volume
   private audio = [new Audio(), new Audio(),new Audio(),new Audio(),new Audio()]; //Audios of all the pads
   private loopColor :String = "primary"; //Color of the loop button
 
