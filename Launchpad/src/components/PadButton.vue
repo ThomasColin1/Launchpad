@@ -17,11 +17,8 @@
 
 
 <script lang='ts'>
-import {Component, Prop, Vue} from "vue-property-decorator";
-@Component({
-  components: {
-  }
-})
+import {Component, Prop, Vue} from "vue-property-decorator"
+@Component
 export default class PadButton extends Vue {
   @Prop(String) readonly ln: string | "0"
   @Prop(String) readonly col: string | "0"
@@ -90,7 +87,8 @@ export default class PadButton extends Vue {
       changeVolume(){ //Update sound volume when slider clicked
         var numPadS = this.pad.charAt(0);
         var numPad: number = parseInt(numPadS)-1;
-        this.audio[numPad].volume = this.volume / 100.0;
+
+        //this.audio[numPad].volume = this.volume / 100.0;
       }
       ResetPad(){ //Stops all audios (looped or not)
         for (let i=0; i<this.audio.length;i++){
