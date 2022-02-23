@@ -17,17 +17,22 @@
 
 
 <script lang='ts'>
-  export default{
-    name: "PadButton",
-    data(){
-      return{
-        volume: 50, //Origin volume
-        audio : [new Audio(), new Audio(),new Audio(),new Audio(),new Audio()], //Audios of all the pads
-        loopColor : "primary", //Color of the loop button
-      }
-    },
-    setup(){
-    },
+import {Component, Prop, Vue} from "vue-property-decorator";
+@Component({
+  components: {
+  }
+})
+export default class PadButton extends Vue {
+  @Prop(String) readonly ln: string | "0"
+  @Prop(String) readonly col: string | "0"
+  @Prop(String) readonly id: string | "0"
+  @Prop(String) readonly pad: string | "Drums"
+
+
+  private volume: Number = 50; //Origin volume
+  private audio = [new Audio(), new Audio(),new Audio(),new Audio(),new Audio()]; //Audios of all the pads
+  private loopColor :String = "primary"; //Color of the loop button
+
     mounted(){ //Charge sounds when mounted and not on click, for no latency
     console.log(this.id);
       try{ //verify file existence
@@ -43,31 +48,9 @@
         console.log("../assets/"+"2 - Samples"+"/"+this.id+".mp3  :  not loaded");
       }
       this.audio[1].volume = 0.5;
-    },
-    props: {
-      ln:{ //Line number of pad button
-        type: String,
-        required: true,
-        default: '0'
-      },
-      col:{ //Column number of pad button
-        type: String,
-        required: true,
-        default: '0'
-      },
-      id:{
-        type: String,
-        required: true,
-        default: '0'
-      },
-      pad:{ //The actual launchpad used
-        type: String,
-        required: false,
-        default: 'Drums'
-      },
-    },
-    methods: {
-      playAudio: function(){ // Start sound at button click
+    }
+
+      playAudio(){ // Start sound at button click
           var numPadS = this.pad.charAt(0);
           var numPad: number = parseInt(numPadS)-1;
           console.log("play "+this.id);
@@ -75,20 +58,20 @@
           this.audio[numPad].currentTime=0;
           this.audio[numPad].play();
           //To be implemented
-        },
-      stopAudio: function(){ //Stops sounds at click on stop button
+        }
+      stopAudio(){ //Stops sounds at click on stop button
           var numPadS = this.pad.charAt(0);
           var numPad: number = parseInt(numPadS)-1;
         this.audio[numPad].pause();
-      },
-      loopAudio: function(){ //Change loop state when click on loop
+      }
+      loopAudio(){ //Change loop state when click on loop
           var numPadS = this.pad.charAt(0);
           var numPad: number = parseInt(numPadS)-1;
         this.audio[numPad].play();
         this.audio[numPad].loop = !this.audio[numPad].loop;
         this.updateLoopColor();
-      },
-      updateLoopColor: function(){ //Change loop button color to differenciate when loop activated
+      }
+      updateLoopColor(){ //Change loop button color to differenciate when loop activated
           var numPadS = this.pad.charAt(0);
           var numPad: number = parseInt(numPadS)-1;
         if(this.audio[numPad].loop){
@@ -97,23 +80,23 @@
           this.loopColor="primary";
         }
         return this.loopColor;
-      },
-      updateVolume: function(){ //Update volume slider when change pads
+      }
+      updateVolume(){ //Update volume slider when change pads
         var numPadS = this.pad.charAt(0);
         var numPad: number = parseInt(numPadS)-1;
         var vol = document.getElementById('volume');
         this.volume=Math.floor(this.audio[numPad].volume*100);
-      },
-      changeVolume: function(){ //Update sound volume when slider clicked
+      }
+      changeVolume(){ //Update sound volume when slider clicked
         var numPadS = this.pad.charAt(0);
         var numPad: number = parseInt(numPadS)-1;
-        this.audio[numPad].volume = this.volume/100.0;
-      },
-      ResetPad : function(){ //Stops all audios (looped or not)
+        this.audio[numPad].volume = this.volume / 100.0;
+      }
+      ResetPad(){ //Stops all audios (looped or not)
         for (let i=0; i<this.audio.length;i++){
           this.audio[i].pause();
         }
       }
-    }
+
   }
 </script>
