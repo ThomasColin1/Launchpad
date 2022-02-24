@@ -41,15 +41,19 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { AudioService}  from "./AudioService"
+import { Data } from "./Data"
+import * as Tone from 'tone'
 @Component
 export default class PadButton extends Vue {
 	@Prop(String) readonly ln!: string | "0";
 	@Prop(String) readonly col!: string | "0";
 	@Prop() readonly id!: number | 0;
   @Prop(AudioService) readonly audio!: AudioService;
+  @Prop() readonly data!: Data;
 
 	public volume: number = 50; //Origin volume
 	private loopColor: String = "primary"; //Color of the loop button
+  public player: any;
 
 	mounted() {
 		//Charge sounds when mounted and not on click, for no latency
@@ -78,9 +82,14 @@ export default class PadButton extends Vue {
 		this.audio[1].volume = 0.5;*/
 	}
 
-	playAudio() {
+	playAudio(e:any) {
 		// Start sound at button click
-    this.audio.playAudio(this.id);
+    /*if(this.data.instrumentSelected== ""){
+      this.audio.playAudio(this.id);
+    }else{
+      alert(this.data.instrumentSelected)
+      this.audio.addAudio(this.id, "../assets/Lofi/"+this.data.instrumentSelected)
+    }*/
 		//To be implemented
 	}
 	stopAudio() {

@@ -9,6 +9,7 @@
 						:col="(x - 1).toString()"
 						:id="(x - 1 + (y - 1) * 8)"
             :audio="audioService"
+            :data="data"
 						class="PadElement"
 					/>
 				</div>
@@ -27,7 +28,9 @@
 <script lang="ts">
 import { Component, Prop, Vue, Ref } from "vue-property-decorator";
 import PadButton from "./PadButton.vue";
-import { AudioService } from "./AudioService"
+import { AudioService } from "./AudioService";
+import { ListAudios }  from "./ListAudios";
+import {Data} from "./Data";
 
 @Component({
 	components: {
@@ -40,7 +43,11 @@ export default class Launchpad extends Vue {
 	public sizeY = 8;
   public audioService = new AudioService(this.buttonNumber);
 
+  mounted(){
+  }
+
 	@Prop(String) readonly instrument!: string | "0";
+  @Prop() readonly data!: Data;
 
 	@Ref() Padbutton!: PadButton[];
 	Reset() {

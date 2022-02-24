@@ -5,13 +5,20 @@
 
     <ToolBox
     @instrumentChoice="InstrumentChoice"
+    :data="data"
     />
 
     <q-page-container>
       <ToolBar
       @reset="Reset()"
+      :data="data"
       />
-      <Launchpad id="lnpad" :instrument="instrument" ref="Launchpad" />
+      <Launchpad
+      id="lnpad"
+      :instrument="instrument"
+      ref="Launchpad"
+      :data="data"
+      />
     </q-page-container>
   </q-layout>
 
@@ -43,6 +50,7 @@ import {Component, Vue, Ref} from "vue-property-decorator"
 import ToolBar from "./components/ToolBar.vue";
 import ToolBox from "./components/ToolBox.vue";
 import Launchpad from "./components/Launchpad.vue";
+import {Data} from "./components/Data";
 
 @Component({
   components: {
@@ -52,6 +60,9 @@ import Launchpad from "./components/Launchpad.vue";
   }
 })
 export default class App extends Vue{
+
+  public data : Data = new Data();
+
   public instrument: String = "1 - Classic Drums";
     clavier(e : String){ //Gestion du clavier pour les deux premieres lignes du pad
 
