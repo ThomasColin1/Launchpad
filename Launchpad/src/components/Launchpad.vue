@@ -2,14 +2,14 @@
 	<div class="q-pa-md">
 		<div class="wrapper" id="PadWrapper">
 			<template v-for="y in sizeY">
-				<div v-for="x in sizeX">
+				<div v-for="x in sizeX" >
 					<PadButton
 						ref="Padbutton"
 						:ln="(y - 1).toString()"
 						:col="(x - 1).toString()"
-						:id="(x - 1 + (y - 1) * 8).toString()"
+						:id="(x - 1 + (y - 1) * 8)"
+            :audio="audioService"
 						class="PadElement"
-						:pad="instrument"
 					/>
 				</div>
 			</template>
@@ -27,6 +27,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Ref } from "vue-property-decorator";
 import PadButton from "./PadButton.vue";
+import { AudioService } from "./AudioService"
 
 @Component({
 	components: {
@@ -37,6 +38,7 @@ export default class Launchpad extends Vue {
 	private buttonNumber = 64;
 	public sizeX = 8;
 	public sizeY = 8;
+  public audioService = new AudioService(this.buttonNumber);
 
 	@Prop(String) readonly instrument!: string | "0";
 
