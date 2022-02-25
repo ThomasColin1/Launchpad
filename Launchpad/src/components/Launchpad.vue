@@ -4,32 +4,31 @@
 			<template v-for="y in sizeY">
 				<div v-for="x in sizeX" >
 					<PadButton
-						ref="Padbutton"
-						:ln="(y - 1).toString()"
-						:col="(x - 1).toString()"
 						:id="(x - 1 + (y - 1) * 8)"
+						ref="Padbutton"
+						class="PadElement"
             :audio="audioService"
             :data="data"
-						class="PadElement"
+            @deselectInstrument="deselectInstrument()"
 					/>
 				</div>
 			</template>
 		</div>
 
 		<p
-			style="text-align:center; font-family: 'Calibri', Times, sans-serif; font-size:18px"
+			class="text-center text-body1"
 		>
-			<br />Actually selected : {{ instrument }} <br />Right-click on pad for
-			options
+			<br />Right-click on pad for options
+      <br />Select instrument and click on pad to assign
+      <br />Color code : <span class="text-red">Red</span> : unassigned ---- <span class="text-blue">Blue</span> : assigned ---- <span class="text-green">Green</span> : looped
 		</p>
 	</div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Ref } from "vue-property-decorator";
+import { Component, Prop, Vue, Ref, Emit } from "vue-property-decorator";
 import PadButton from "./PadButton.vue";
 import { AudioService } from "./AudioService";
-import { ListAudios }  from "./ListAudios";
 import {Data} from "./Data";
 
 @Component({
@@ -50,10 +49,15 @@ export default class Launchpad extends Vue {
   @Prop() readonly data!: Data;
 
 	@Ref() Padbutton!: PadButton[];
-	Reset() {
+	reset() {
 		for (let i = 0; i < this.buttonNumber; i++) {
-			this.Padbutton[i].ResetPad(); //Sends reset order to the pad buttons
+			this.Padbutton[i].resetPad(); //Sends reset order to the pad buttons
 		}
 	}
+
+  @Emit("deselectInstrument")
+    deselectInstrument() { //Sends reset order to the App
+      return("deselectInstrument");
+  }
 }
 </script>

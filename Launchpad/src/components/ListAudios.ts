@@ -1,44 +1,73 @@
-
-//import fs from 'fs';
-
-
-//import * as fs from "fs";
-export function ListAudios(){
-
-  //const fs = require('fs');
-  const dir = URL;
+//Generates an array for a q-tree with all the audios in it
+export function listAudios(){
 
   var tree:Array<{label: string,children: Array< {label: string}>, icon: string}> = [];
 
-  var Bass:Array<{label: string}> = [{label: "Lofi Bass 001.wav"},{label:  "Lofi Bass 002.wav"},{label: "Lofi Bass 003.wav"},{label: "Lofi Bass 004.wav"},{label: "Lofi Bass 005.wav"},{label: "Lofi Bass 006.wav"},{label: "Lofi Bass 007.wav"},{label: "Lofi Bass 008.wav"},{label: "Lofi Bass 009.wav"},{label: "Lofi Bass 010.wav"}]
-  tree.push({label: "Bass One Shots", children: Bass,icon: "album"});
-  var Kicks:Array<{label: string}> = [{label: "Lofi Kick 001.wav"},{label: "Lofi Kick 002.wav"},{label: "Lofi Kick 003.wav"},{label: "Lofi Kick 004.wav"},{label: "Lofi Kick 005.wav"},{label: "Lofi Kick 006.wav"},{label: "Lofi Kick 007.wav"},{label: "Lofi Kick 008.wav"},{label: "Lofi Kick 009.wav"},{label: "Lofi Kick 010.wav"},{label: "Lofi Kick 011.wav"},{label: "Lofi Kick 012.wav"},{label: "Lofi Kick 013.wav"},{label: "Lofi Kick 014.wav"},{label: "Lofi Kick 015.wav"},{label: "Lofi Kick 016.wav"},{label: "Lofi Kick 017.wav"},{label: "Lofi Kick 018.wav"}]
+  //Here, necessary to add each instrument one by one because require.context() does not allows variables as arguments
+  var Bass:Array<{label:string}>=[];
+  require.context("../assets/Lofi/", false, /^.*Bass.*$/).keys().forEach(function (value:string) {
+    console.log(value);
+    value=value.substring(2,value.length);
+    Bass.push({label: value});
+  });
+  tree.push({label: "Bass",children: Bass,icon: "fas fa-guitar" });
+
+  var Kicks:Array<{label:string}>=[];
+  require.context("../assets/Lofi/", false, /^.*Kick.*$/).keys().forEach(function (value:string) {
+    console.log(value);
+    value=value.substring(2,value.length);
+    Kicks.push({label: value});
+  });
   tree.push({label: "Kicks",children: Kicks,icon: "fas fa-drum" });
-  Bass/*var Bass:Array<string> = ["Lofi Bass 001.wav", "Lofi Bass 002.wav", "Lofi Bass 003.wav", "Lofi Bass 004.wav", "Lofi Bass 005.wav", "Lofi Bass 006.wav", "Lofi Bass 007.wav", "Lofi Bass 008.wav", "Lofi Bass 009.wav", "Lofi Bass 010.wav"]
-  tree.push({name: "Bass One Shots", files: Bass});
-  var Bass:Array<string> = ["Lofi Bass 001.wav", "Lofi Bass 002.wav", "Lofi Bass 003.wav", "Lofi Bass 004.wav", "Lofi Bass 005.wav", "Lofi Bass 006.wav", "Lofi Bass 007.wav", "Lofi Bass 008.wav", "Lofi Bass 009.wav", "Lofi Bass 010.wav"]
-  tree.push({name: "Bass One Shots", files: Bass});
-  var Bass:Array<string> = ["Lofi Bass 001.wav", "Lofi Bass 002.wav", "Lofi Bass 003.wav", "Lofi Bass 004.wav", "Lofi Bass 005.wav", "Lofi Bass 006.wav", "Lofi Bass 007.wav", "Lofi Bass 008.wav", "Lofi Bass 009.wav", "Lofi Bass 010.wav"]
-  tree.push({name: "Bass One Shots", files: Bass});
-  var Bass:Array<string> = ["Lofi Bass 001.wav", "Lofi Bass 002.wav", "Lofi Bass 003.wav", "Lofi Bass 004.wav", "Lofi Bass 005.wav", "Lofi Bass 006.wav", "Lofi Bass 007.wav", "Lofi Bass 008.wav", "Lofi Bass 009.wav", "Lofi Bass 010.wav"]
-  tree.push({name: "Bass One Shots", files: Bass});
-  var Bass:Array<string> = ["Lofi Bass 001.wav", "Lofi Bass 002.wav", "Lofi Bass 003.wav", "Lofi Bass 004.wav", "Lofi Bass 005.wav", "Lofi Bass 006.wav", "Lofi Bass 007.wav", "Lofi Bass 008.wav", "Lofi Bass 009.wav", "Lofi Bass 010.wav"]
-  tree.push({name: "Bass One Shots", files: Bass});
-  var Bass:Array<string> = ["Lofi Bass 001.wav", "Lofi Bass 002.wav", "Lofi Bass 003.wav", "Lofi Bass 004.wav", "Lofi Bass 005.wav", "Lofi Bass 006.wav", "Lofi Bass 007.wav", "Lofi Bass 008.wav", "Lofi Bass 009.wav", "Lofi Bass 010.wav"]
-  tree.push({name: "Bass One Shots", files: Bass});
-  var Bass:Array<string> = ["Lofi Bass 001.wav", "Lofi Bass 002.wav", "Lofi Bass 003.wav", "Lofi Bass 004.wav", "Lofi Bass 005.wav", "Lofi Bass 006.wav", "Lofi Bass 007.wav", "Lofi Bass 008.wav", "Lofi Bass 009.wav", "Lofi Bass 010.wav"]
-  tree.push({name: "Bass One Shots", files: Bass});
-  var Bass:Array<string> = ["Lofi Bass 001.wav", "Lofi Bass 002.wav", "Lofi Bass 003.wav", "Lofi Bass 004.wav", "Lofi Bass 005.wav", "Lofi Bass 006.wav", "Lofi Bass 007.wav", "Lofi Bass 008.wav", "Lofi Bass 009.wav", "Lofi Bass 010.wav"]
-  tree.push({name: "Bass One Shots", files: Bass});*/
 
+  var Snares:Array<{label: string}> = [];
+  require.context("../assets/Lofi/", false, /^.*Sna.*$/).keys().forEach(function (value:string) {
+    console.log(value);
+    value=value.substring(2,value.length);
+    Snares.push({label: value});
+  });
+  tree.push({label: "Snares", children: Snares, icon: "fas fa-drum-steelpan"});
 
-  //const files = fs.readdirSync(dir);
-  //const files = readdir(dir);
+  var Percs:Array<{label: string}> = [];
+  require.context("../assets/Lofi/", false, /^.*Perc.*$/).keys().forEach(function (value:string) {
+    console.log(value);
+    value=value.substring(2,value.length);
+    Percs.push({label: value});
+  });
+  tree.push({label: "Percs", children: Percs, icon: "fas fa-compact-disc"});
 
-  //const files = (require.context(dir, true, /.*/));
+  var Samples:Array<{label: string}> = [];
+  require.context("../assets/Lofi/", false, /^.*Sample.*$/).keys().forEach(function (value:string) {
+    console.log(value);
+    value=value.substring(2,value.length);
+    Samples.push({label: value});
+  });
+  tree.push({label: "Samples", children: Samples, icon: "fas fa-music"});
+
+  var Vocals:Array<{label: string}> = [];
+  require.context("../assets/Lofi/", false, /^.*Vocal.*$/).keys().forEach(function (value:string) {
+    console.log(value);
+    value=value.substring(2,value.length);
+    Vocals.push({label: value});
+  });
+
+  var FX:Array<{label: string}> = [];
+  require.context("../assets/Lofi/", false, /^.*FX.*$/).keys().forEach(function (value:string) {
+    console.log(value);
+    value=value.substring(2,value.length);
+    FX.push({label: value});
+  });
+  require.context("../assets/Lofi/", false, /^.*Vinyl.*$/).keys().forEach(function (value:string) {
+    console.log(value);
+    value=value.substring(2,value.length);
+    FX.push({label: value});
+  });
+  tree.push({label: "FX and Vinyl", children: FX, icon: "album"});
+
+  //The eraser : to delete the audio assigned to a pad
+  tree.push({label: "Erase", children: [], icon: "fas fa-eraser"});
 
   return tree;
 
 };
-
 

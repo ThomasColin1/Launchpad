@@ -10,13 +10,6 @@
           Options
         </q-item-label>
 
-        <Instrument
-          v-for="link in instrumentsList"
-          :key="link.title"
-          v-bind="link"
-          @instrumentChoice="InstrumentChoice"
-        />
-
         <div class="q-pa-md q-gutter-sm" @click="sendInstrument()">
     <q-tree
       :nodes="arbre"
@@ -31,47 +24,40 @@
 
 <script lang="ts">
 import {Component, Prop,Emit, Vue} from "vue-property-decorator"
-import Instrument from "./Instrument.vue";
-import { ListAudios } from "./ListAudios";
+import { listAudios } from "./ListAudios";
 import {Data} from "./Data";
+import * as Tone from 'tone'
 
-@Component({
-  components: {
-    Instrument,
-  }
-})
+@Component
 export default class ToolBox extends Vue{
-  public arbre: Array<{label : string, children: Array<{label: string}>}> = ListAudios();
-  public instrumentChoisi = null;
-  public instrumentsList = [ //List of instruments
-
-
-  {
-    title: '1 - Classic Drums',
-    caption: '',
-    icon: 'fas fa-drum',
-    link: ''
-  },
-  {
-    title: '2 - Samples',
-    caption: '',
-    icon: 'album',
-    link: ''
-  }
-];
+  public arbre: Array<{label : string, children: Array<{label: string}>}> = listAudios();
+  public instrumentChoisi = "";
+  public player : Tone.Player = new Tone.Player();
 
   @Prop() readonly data!: Data;
   @Emit("instrumentChoice")
   InstrumentChoice(e:any) { //Sends chosen instrument to App
     return(e);
   }
+  deselectInstrument(){
+    this.instrumentChoisi="";
+    this.player.stop();
+  }
   sendInstrument(){
-    alert(this.instrumentChoisi);
     if(this.instrumentChoisi!=null){
-      this.data.instrumentSelected=this.instrumentChoisi;
-    }
-    else{
-      this.data.instrumentSelected="";
+      this.data.setInstrumentSelected(this.instrumentChoisi);
+
+      if(this.instrumentChoisi!="Erase" && this.instrumentChoisi.includes(".")){
+        this.player = new Tone.Player(require("../assets/Lofi/"+this.data.getInstrumentSelected())).toDestination();
+        Tone.loaded().then(() => {
+          this.player.volume.value = -20;
+          this.player.start();
+        });
+      }
+
+    }else{
+      this.data.setInstrumentSelected("");
+      this.player.stop();
     }
   }
 }

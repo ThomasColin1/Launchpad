@@ -15,6 +15,8 @@ export default class ToolBar extends Vue{
     ResetEmitter() { //Sends reset order to the App
       this.data.reset();
       return("reset");
+
+
     }
 }
 </script>
