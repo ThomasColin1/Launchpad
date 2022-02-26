@@ -1,16 +1,18 @@
 <template id="q-app">
 	<q-layout view="lHh Lpr lFf">
-		<ToolBox @instrumentChoice="InstrumentChoice" :data="data" ref="ToolBox" />
+		<ToolBox :data="data" ref="ToolBox" />
 
 		<q-page-container>
+
 			<ToolBar @reset="reset()" :data="data" />
+
 			<Launchpad
 				id="lnpad"
-				:instrument="instrument"
 				ref="Launchpad"
 				:data="data"
 				@deselectInstrument="deselectInstrument()"
 			/>
+
 		</q-page-container>
 
 	</q-layout>
@@ -31,11 +33,11 @@ import { Data } from "./components/Data";
 	}
 })
 export default class App extends Vue {
+
 	public data: Data = new Data();
 
-	public instrument: String = "1 - Classic Drums";
 	clavier(e: String) {
-		//Gestion du clavier pour les deux premieres lignes du pad
+		//Make keyboard work for the first lines of the pad
 
 		switch (e) {
 			case "a": {
@@ -118,15 +120,52 @@ export default class App extends Vue {
 				but!.click();
 				break;
 			}
+      case "w": {
+				const but = document.getElementById("16");
+				but!.click();
+				break;
+			}
+			case "x": {
+				const but = document.getElementById("17");
+				but!.click();
+				break;
+			}
+			case "c": {
+				const but = document.getElementById("18");
+				but!.click();
+				break;
+			}
+			case "v": {
+				const but = document.getElementById("19");
+				but!.click();
+				break;
+			}
+			case "b": {
+				const but = document.getElementById("20");
+				but!.click();
+				break;
+			}
+			case "n": {
+				const but = document.getElementById("21");
+				but!.click();
+				break;
+			}
+			case ",": {
+				const but = document.getElementById("22");
+				but!.click();
+				break;
+			}
+			case ";": {
+				const but = document.getElementById("23");
+				but!.click();
+				break;
+			}
 		}
 	}
 
-	InstrumentChoice(e: String) {
-		this.instrument = e; //Gets instrument for ToolBox and give it to Launchpad by props
-	}
 	@Ref() ToolBox!: ToolBox;
 	deselectInstrument() {
-		//Sends reset order to the App
+		//Sends deselect order to the ToolBox
 		this.ToolBox.deselectInstrument();
 	}
 
@@ -135,8 +174,10 @@ export default class App extends Vue {
 		//Sends reset order to Launchpad
 		this.Launchpad.reset();
 	}
+
 	created() {
 		window.addEventListener("keypress", event => this.clavier(event.key));
 	}
+
 }
 </script>

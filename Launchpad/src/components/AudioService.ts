@@ -1,3 +1,5 @@
+/*The service managing all the audio actions for the pads*/
+
 import * as Tone from 'tone'
 export class AudioService{
   audio : Array<Tone.Player>;

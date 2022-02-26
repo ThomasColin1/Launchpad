@@ -1,4 +1,4 @@
-//Generates an array for a q-tree with all the audios in it
+/*This methods returns an array fitting for a q-tree with all the audios and their categories*/
 export function listAudios(){
 
   var tree:Array<{label: string,children: Array< {label: string}>, icon: string}> = [];
@@ -6,7 +6,6 @@ export function listAudios(){
   //Here, necessary to add each instrument one by one because require.context() does not allows variables as arguments
   var Bass:Array<{label:string}>=[];
   require.context("../assets/Lofi/", false, /^.*Bass.*$/).keys().forEach(function (value:string) {
-    console.log(value);
     value=value.substring(2,value.length);
     Bass.push({label: value});
   });
@@ -14,7 +13,6 @@ export function listAudios(){
 
   var Kicks:Array<{label:string}>=[];
   require.context("../assets/Lofi/", false, /^.*Kick.*$/).keys().forEach(function (value:string) {
-    console.log(value);
     value=value.substring(2,value.length);
     Kicks.push({label: value});
   });
@@ -22,7 +20,6 @@ export function listAudios(){
 
   var Snares:Array<{label: string}> = [];
   require.context("../assets/Lofi/", false, /^.*Sna.*$/).keys().forEach(function (value:string) {
-    console.log(value);
     value=value.substring(2,value.length);
     Snares.push({label: value});
   });
@@ -30,7 +27,6 @@ export function listAudios(){
 
   var Percs:Array<{label: string}> = [];
   require.context("../assets/Lofi/", false, /^.*Perc.*$/).keys().forEach(function (value:string) {
-    console.log(value);
     value=value.substring(2,value.length);
     Percs.push({label: value});
   });
@@ -38,7 +34,6 @@ export function listAudios(){
 
   var Samples:Array<{label: string}> = [];
   require.context("../assets/Lofi/", false, /^.*Sample.*$/).keys().forEach(function (value:string) {
-    console.log(value);
     value=value.substring(2,value.length);
     Samples.push({label: value});
   });
@@ -46,28 +41,24 @@ export function listAudios(){
 
   var Vocals:Array<{label: string}> = [];
   require.context("../assets/Lofi/", false, /^.*Vocal.*$/).keys().forEach(function (value:string) {
-    console.log(value);
     value=value.substring(2,value.length);
     Vocals.push({label: value});
   });
 
   var FX:Array<{label: string}> = [];
   require.context("../assets/Lofi/", false, /^.*FX.*$/).keys().forEach(function (value:string) {
-    console.log(value);
     value=value.substring(2,value.length);
     FX.push({label: value});
   });
   require.context("../assets/Lofi/", false, /^.*Vinyl.*$/).keys().forEach(function (value:string) {
-    console.log(value);
     value=value.substring(2,value.length);
     FX.push({label: value});
   });
   tree.push({label: "FX and Vinyl", children: FX, icon: "album"});
 
-  //The eraser : to delete the audio assigned to a pad
+  //The eraser : used to delete the audio assigned to a pad
   tree.push({label: "Erase", children: [], icon: "fas fa-eraser"});
 
   return tree;
-
 };
 

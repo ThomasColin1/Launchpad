@@ -4,7 +4,7 @@
 		:ln="ln"
 		:id="id"
     :state="btnColor"
-		v-on:click="playAudio()"
+		v-on:click="padClick()"
 	>
 		<q-menu :context-menu="true" class="q-pa-md">
 			<p class="text-center">Volume :</p>
@@ -50,7 +50,8 @@ import { Data } from "./Data"
 import * as Tone from 'tone'
 @Component
 export default class PadButton extends Vue {
-	@Prop() readonly id!: number | 0;
+
+	@Prop() readonly id!: number;
   @Prop(AudioService) readonly audio!: AudioService;
   @Prop() readonly data!: Data;
 
@@ -60,8 +61,11 @@ export default class PadButton extends Vue {
   private ln: string = (Math.trunc(this.id/8)).toString(); //number of line, for styling the q-btn
   private col: string = (this.id%8).toString(); //number of column, for styling the q-btn
 
-	playAudio() {
-		// Start sound at button click
+	padClick() {
+		// Start sound if pad assigned
+    // Select sound if pad unassigned and instrument selected
+    // Make pad unassigned if instrument selected is Eraser
+
     if(this.data.getInstrumentSelected()==""){
       if(this.audio.getState(this.id)!=0){
         this.audio.playAudio(this.id);
@@ -77,7 +81,8 @@ export default class PadButton extends Vue {
 	}
 
   @Emit("deselectInstrument")
-    deselectInstrument() { //Sends reset order to the App
+    deselectInstrument() {
+      //Sends deselect order to the toolbox when sound has been assigned
       this.data.setInstrumentSelected("");
       return("deselectInstrument");
     }
@@ -86,6 +91,7 @@ export default class PadButton extends Vue {
 		//Stops sounds at click on stop button
     this.audio.stopAudio(this.id);
 	}
+
 	loopAudio() {
 		//Change loop state when click on loop
     if(this.audio.getState(this.id)!=0){
@@ -93,8 +99,9 @@ export default class PadButton extends Vue {
       this.updateColor();
     }
 	}
+
 	updateColor() {
-		//Change loop button color to differentiate when loop activated
+		//Update the loop and pad colors
     let state = this.audio.getState(this.id);
     this.btnColor=state.toString();
 		if (state == 2) {
@@ -103,14 +110,15 @@ export default class PadButton extends Vue {
 			this.loopColor = "primary";
 		}
 		return this.loopColor, this.btnColor;
-
 	}
+
 	changeVolume() {
-		//Update volume slider when change pads
+		//Update volume when action on slider
 		this.audio.changeVolume(this.id, this.volume);
 	}
+
 	resetPad() {
-		//Stops all audios (looped or not)
+		//Stops all audios, resets colors and volumes
 		this.audio.reset();
     this.updateColor();
     this.volume=50;
