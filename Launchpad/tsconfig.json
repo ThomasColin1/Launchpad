@@ -2,7 +2,11 @@
   "extends": "@quasar/app/tsconfig-preset",
   "compilerOptions": {
     "baseUrl": ".",
-    "strict": false
-
+    "experimentalDecorators": true,
+    "types": [
+      "node",
+      "webpack-env", // here
+      "quasar"
+    ]
   }
 }

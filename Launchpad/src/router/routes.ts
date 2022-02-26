@@ -1,18 +1,17 @@
-import { RouteRecordRaw } from 'vue-router';
+import { RouteConfig } from 'vue-router';
 
-const routes: RouteRecordRaw[] = [
+const routes: RouteConfig[] = [
   {
     path: '/',
     component: () => import('../App.vue'),
-    children: [{ path: '', component: () => import('../components/Launchpad.vue') }],
   },
 
   // Always leave this as last one,
   // but you can also remove it
   {
-    path: '/:catchAll(.*)*',
-    component: () => import('pages/Error404.vue'),
-  },
+    path: '*',
+    component: () => import('pages/Error404.vue')
+  }
 ];
 
 export default routes;
