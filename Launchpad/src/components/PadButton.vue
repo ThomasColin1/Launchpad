@@ -71,6 +71,7 @@ export default class PadButton extends Vue {
         this.audio.playAudio(this.id);
       }
     }else if (this.data.getInstrumentSelected()=="Erase"){
+      this.audio.stopAudio(this.id);
       this.audio.erase(this.id);
       this.updateColor();
     }else if (this.data.getInstrumentSelected().includes(".")){
