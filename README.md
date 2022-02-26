@@ -1,2 +1,2 @@
 # Launchpad
- Quasar/VueJS/TS launchpad
+A launchpad made in Quasar and Typescript, class-based with vue-property-decorator.
