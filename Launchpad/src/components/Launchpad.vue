@@ -1,6 +1,7 @@
 <template>
 	<div class="q-pa-md">
-		<div class="wrapper" id="PadWrapper">
+    <div class="OverWrapper" id="GeneralWrapper">
+		<div class="PadWrapper" id="PadWrapper">
 			<template v-for="y in launchpadSizeY">
 				<div v-for="x in launchpadSizeX" >
 					<PadButton
@@ -11,9 +12,26 @@
             :data="data"
             @deselectInstrument="deselectInstrument()"
 					/>
+
 				</div>
+
+
+
+
 			</template>
-		</div>
+    </div>
+    <div class="RecordWrapper" id="RecordWrapper">
+			<template v-for="y in launchpadSizeY">
+      <Recorder
+						:recordNumber="(y - 1)"
+            :key="'Record n'+y.toString()"
+						class="Recorder"
+            :audio="audioService"
+            :data="data"
+					/>
+          </template>
+    </div>
+    </div>
 
 		<p
 			class="text-center text-body1"
@@ -28,13 +46,15 @@
 <script lang="ts">
 import { Component, Prop, Vue, Ref, Emit } from "vue-property-decorator";
 import PadButton from "./PadButton.vue";
+import Recorder from "./Recorder.vue"
 import { AudioService } from "./AudioService";
 import {Data} from "./Data";
 
 
 @Component({
 	components: {
-		PadButton
+		PadButton,
+    Recorder
 	}
 })
 export default class Launchpad extends Vue {
@@ -45,7 +65,7 @@ export default class Launchpad extends Vue {
   private buttonNumber = this.data.getButtonNumber();
   private launchpadSizeX = this.data.getLaunchpadSizeX();
   private launchpadSizeY = this.data.getLaunchpadSizeY();
-  private audioService = new AudioService(this.buttonNumber);
+  private audioService = new AudioService(this.buttonNumber, this.launchpadSizeY, this.launchpadSizeX);
 
 	@Ref() Padbutton!: PadButton[];
 

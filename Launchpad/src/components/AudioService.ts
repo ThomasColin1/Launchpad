@@ -2,19 +2,74 @@
 
 import * as Tone from 'tone'
 export class AudioService{
-  audio : Array<Tone.Player>;
-  state : Array<number>;
-  buttonNumber : number;
+  private audio : Array<Tone.Player>;
+  private state : Array<number>;
+  private recordState : Array<number>;
+  private buttonNumber : number;
+  private recordNumber : number;
+  private numberButtonsByRecord: number;
+  private records : Array<Array<Array<boolean>>>;
+  private buttonClicked : Array<boolean>;
+  private recordIterator : Array<number>;
+  private recordLength : Array<number>;
 
-  constructor(buttonNumber : number){
+  constructor(buttonNumber : number, recordNumber : number, buttonsByRecord : number){
 
       this.buttonNumber = buttonNumber;
+      this.recordNumber = recordNumber;
+      this.numberButtonsByRecord = buttonsByRecord;
       this.audio=[];
       this.state=[];
-      for(let i=0;i<buttonNumber;i++){
+      this.recordState=[];
+      this.records=[];
+      this.buttonClicked=[];
+      this.recordIterator=[];
+      this.recordLength = [];
+      for(let i=0;i<this.buttonNumber;i++){
         this.audio.push(new Tone.Player());
         this.state.push(0);
+        this.buttonClicked[i]=false;
       }
+      let array = [];
+      for(let j=0;j<this.numberButtonsByRecord;j++){
+        array.push([]);
+      }
+      for(let i=0;i<this.recordNumber;i++){
+        this.recordState.push(0);
+        this.recordIterator.push(0);
+        this.recordLength.push(0);
+        this.records.push(array);
+      }
+
+      this.startInterval(this);
+
+
+  }
+
+  public startInterval(self:any){
+    setInterval(function() {
+      for(let i=0;i<self.recordNumber;i++){
+        if(self.recordState[i]==1){
+          for(let j=i*8;j<(i+1)*8;j++){
+            self.records[i][j].push(self.buttonClicked[j])
+
+          }
+        }else if (self.recordState[i]==3){
+
+          for(let j=i*8;j<(i+1)*8;j++){
+            if(self.records[i][j][self.recordIterator[i]]==1){
+              let id=i*8+j;
+              console.log(id);
+              document.getElementById(id.toString())?.click();
+            }
+          }
+          self.recordIterator[i]++;
+        }
+      }
+      for(let i=0;i<self.buttonNumber;i++){
+        self.buttonClicked[i]=false;
+      }
+    }, 1000);
   }
 
   public addAudio(buttonId : number, audioName : string){
@@ -29,6 +84,10 @@ export class AudioService{
     Tone.loaded().then(() => {
 	    this.audio[buttonId].start();
     });
+  }
+
+  public buttonClick(buttonId:number){
+    this.buttonClicked[buttonId]=true;
   }
 
 
@@ -66,6 +125,10 @@ export class AudioService{
     return this.state[buttonId];
   }
 
+  public getRecordState(recId : number){
+    return this.recordState[recId];
+  }
+
   public erase(buttonId:number){
     this.audio[buttonId] = new Tone.Player();
     this.state[buttonId] = 0;
@@ -79,6 +142,30 @@ export class AudioService{
       this.state[i] = 0;
       this.audio[i].volume.value=-20;
     }
+  }
+
+  public recordClick(idRec : number){
+    if(this.recordState[idRec]==0){ //Not recording to recording
+      this.recordState[idRec]=1;
+    }else if (this.recordState[idRec]==1){ //Recording to paused
+      this.recordState[idRec]=2;
+      this.recordLength[idRec]=this.recordIterator[idRec];
+      this.recordIterator[idRec]=0;
+    }else if (this.recordState[idRec]==2){ //Paused to playing
+      this.recordState[idRec]=3;
+    }else if (this.recordState[idRec]==3){ //Playing to paused
+      this.recordIterator[idRec]=0;
+      this.recordState[idRec]=2;
+    }
+  }
+
+  public deleteRecord(idRec: number){
+    this.recordState[idRec]=0;
+    for(let i=0;i<this.numberButtonsByRecord;i++){
+      this.records[idRec][i]=[];
+    }
+    this.recordIterator[idRec]=0;
+    this.recordLength[idRec]=0;
   }
 
 }

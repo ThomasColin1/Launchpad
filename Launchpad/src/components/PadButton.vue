@@ -65,6 +65,7 @@ export default class PadButton extends Vue {
 		// Start sound if pad assigned
     // Select sound if pad unassigned and instrument selected
     // Make pad unassigned if instrument selected is Eraser
+    this.audio.buttonClick(this.id);
 
     if(this.data.getInstrumentSelected()==""){
       if(this.audio.getState(this.id)!=0){
