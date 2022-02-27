@@ -3,7 +3,7 @@
     <div class="OverWrapper" id="GeneralWrapper">
 		<div class="PadWrapper" id="PadWrapper">
 			<template v-for="y in launchpadSizeY">
-				<div v-for="x in launchpadSizeX" >
+				<div v-for="x in launchpadSizeX" :key="x+' '+y" >
 					<PadButton
 						:id="(x - 1 + (y - 1) * 8)"
 						ref="Padbutton"

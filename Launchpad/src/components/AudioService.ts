@@ -1,5 +1,6 @@
 /*The service managing all the audio actions for the pads*/
 
+import { theWindow } from 'app/../../../../Documents/GitHub/Launchpad/Launchpad/node_modules/tone/build/esm/core/context/AudioContext';
 import * as Tone from 'tone'
 export class AudioService{
   private audio : Array<Tone.Player>;
@@ -12,6 +13,8 @@ export class AudioService{
   private buttonClicked : Array<boolean>;
   private recordIterator : Array<number>;
   private recordLength : Array<number>;
+  private sync : boolean;
+  private wait : boolean;
 
   constructor(buttonNumber : number, recordNumber : number, buttonsByRecord : number){
 
@@ -25,6 +28,9 @@ export class AudioService{
       this.buttonClicked=[];
       this.recordIterator=[];
       this.recordLength = [];
+      this.sync=true;
+      this.wait=false;
+
       for(let i=0;i<this.buttonNumber;i++){
         this.audio.push(new Tone.Player());
         this.state.push(0);
@@ -50,13 +56,13 @@ export class AudioService{
     setInterval(function() {
       for(let i=0;i<self.recordNumber;i++){
         if(self.recordState[i]==1){
-          for(let j=i*8;j<(i+1)*8;j++){
-            self.records[i][j].push(self.buttonClicked[j])
+          for(let j=0;j<self.numberButtonsByRecord;j++){
+            self.records[i][j].push(self.buttonClicked[i*8+j])
 
           }
+          self.recordIterator[i]++;
         }else if (self.recordState[i]==3){
-
-          for(let j=i*8;j<(i+1)*8;j++){
+          for(let j=0;j<self.numberButtonsByRecord;j++){
             if(self.records[i][j][self.recordIterator[i]]==1){
               let id=i*8+j;
               console.log(id);
@@ -64,12 +70,19 @@ export class AudioService{
             }
           }
           self.recordIterator[i]++;
+          if(self.recordIterator[i]>self.recordLength[i]) self.recordIterator[i]=0;
+        }
+
+        if(self.recordState[i]==4 && self.wait==false){
+          console.log("YEEEEE")
+          self.recordState[i]=1;
+          document.getElementById('Record '+i.toString())?.click();
         }
       }
       for(let i=0;i<self.buttonNumber;i++){
         self.buttonClicked[i]=false;
       }
-    }, 1000);
+    }, 100);
   }
 
   public addAudio(buttonId : number, audioName : string){
@@ -146,11 +159,17 @@ export class AudioService{
 
   public recordClick(idRec : number){
     if(this.recordState[idRec]==0){ //Not recording to recording
-      this.recordState[idRec]=1;
+      if(this.wait==false){
+        this.wait=true;
+        this.recordState[idRec]=1;
+      }else if(this.wait==true){
+        this.recordState[idRec]=4;
+      }
     }else if (this.recordState[idRec]==1){ //Recording to paused
-      this.recordState[idRec]=2;
-      this.recordLength[idRec]=this.recordIterator[idRec];
-      this.recordIterator[idRec]=0;
+        this.wait=false;
+        this.recordState[idRec]=2;
+        this.recordLength[idRec]=this.recordIterator[idRec];
+        this.recordIterator[idRec]=0;
     }else if (this.recordState[idRec]==2){ //Paused to playing
       this.recordState[idRec]=3;
     }else if (this.recordState[idRec]==3){ //Playing to paused

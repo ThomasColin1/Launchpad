@@ -80,6 +80,15 @@ export default class App extends Vue {
 				but!.click();
 				break;
 			}
+      case "o": {
+				const but = document.getElementById("RecordButton 0");
+				but!.click();
+				break;
+			}case "p": {
+				const but = document.getElementById("DeleteButton 0");
+				but!.click();
+				break;
+			}
 			case "q": {
 				const but = document.getElementById("8");
 				but!.click();
@@ -120,6 +129,15 @@ export default class App extends Vue {
 				but!.click();
 				break;
 			}
+      case "l": {
+				const but = document.getElementById("RecordButton 1");
+				but!.click();
+				break;
+			}case "m": {
+				const but = document.getElementById("DeleteButton 1");
+				but!.click();
+				break;
+			}
       case "w": {
 				const but = document.getElementById("16");
 				but!.click();
@@ -157,6 +175,15 @@ export default class App extends Vue {
 			}
 			case ";": {
 				const but = document.getElementById("23");
+				but!.click();
+				break;
+			}
+      case ":": {
+				const but = document.getElementById("RecordButton 2");
+				but!.click();
+				break;
+			}case "!": {
+				const but = document.getElementById("DeleteButton 2");
 				but!.click();
 				break;
 			}

@@ -10,7 +10,7 @@
 	</q-btn>
   <q-btn
 		:recordNumber="recordNumber"
-    :id="'Delete '+idButton"
+    :id="idDelete"
     class="DeletePad"
 		v-on:click="deleteRecord()"
 
@@ -33,9 +33,19 @@ export default class Recorder extends Vue {
   @Prop() readonly data!: Data;
 
   private idButton:string = "RecordButton "+this.recordNumber.toString();
+  private idDelete:string = "DeleteButton "+this.recordNumber.toString();
   private buttonColor:string = "black";
   private buttonIcon:string="fas fa-microphone";
   private displayDelete:string="none";
+
+  mounted(){
+    console.log('Record '+this.idButton.toString())
+    let self=this;
+
+    setInterval(function() {
+      self.updateButton();
+    }, 1000);
+  }
 
 	startRecord() {
 		// Start sound if pad assigned
@@ -57,7 +67,6 @@ export default class Recorder extends Vue {
     }*/
     this.audio.recordClick(this.recordNumber);
     this.updateButton();
-
 	}
 
   @Emit("deselectInstrument")
@@ -73,18 +82,18 @@ export default class Recorder extends Vue {
       this.buttonColor="black";
       this.buttonIcon="fas fa-microphone";
     }else if(this.audio.getRecordState(this.recordNumber)==1){
-      var pdbtn=document.getElementById(this.idButton);
       this.buttonColor="red";
       this.buttonIcon="fas fa-microphone";
     }else if(this.audio.getRecordState(this.recordNumber)==2){
       this.displayDelete="block";
       this.buttonColor="green";
       this.buttonIcon="fas fa-play";
-
     }else if(this.audio.getRecordState(this.recordNumber)==3){
-      var pdbtn=document.getElementById(this.idButton);
       this.buttonColor="blue";
       this.buttonIcon="fas fa-stop";
+    }else if(this.audio.getRecordState(this.recordNumber)==4){
+      this.buttonColor="grey";
+      this.buttonIcon="fas fa-microphone";
     }
     return this.buttonColor, this.buttonIcon, this.displayDelete;
 	}
