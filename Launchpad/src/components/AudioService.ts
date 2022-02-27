@@ -13,8 +13,7 @@ export class AudioService{
   private buttonClicked : Array<boolean>;
   private recordIterator : Array<number>;
   private recordLength : Array<number>;
-  private sync : boolean;
-  private wait : boolean;
+  private waitEndRecord : boolean;
 
   constructor(buttonNumber : number, recordNumber : number, buttonsByRecord : number){
 
@@ -23,13 +22,12 @@ export class AudioService{
       this.numberButtonsByRecord = buttonsByRecord;
       this.audio=[];
       this.state=[];
-      this.recordState=[];
+      this.recordState=[]; //0 is none, 1 is recording, 2 is stopped, 3 is playing, 4 is waiting for recording
       this.records=[];
       this.buttonClicked=[];
       this.recordIterator=[];
       this.recordLength = [];
-      this.sync=true;
-      this.wait=false;
+      this.waitEndRecord=false;
 
       for(let i=0;i<this.buttonNumber;i++){
         this.audio.push(new Tone.Player());
@@ -52,28 +50,30 @@ export class AudioService{
 
   }
 
+  //Loop for recording and playing what has been recorder
   public startInterval(self:any){
     setInterval(function() {
+
       for(let i=0;i<self.recordNumber;i++){
+
         if(self.recordState[i]==1){
           for(let j=0;j<self.numberButtonsByRecord;j++){
             self.records[i][j].push(self.buttonClicked[i*8+j])
-
           }
           self.recordIterator[i]++;
+
         }else if (self.recordState[i]==3){
           for(let j=0;j<self.numberButtonsByRecord;j++){
             if(self.records[i][j][self.recordIterator[i]]==1){
               let id=i*8+j;
               self.playAudio(id);
-
             }
           }
           self.recordIterator[i]++;
-          if(self.recordIterator[i]>self.recordLength[i]) self.recordIterator[i]=0;
+          if(self.recordIterator[i]>self.recordLength[i]) self.recordIterator[i]=0; //Loops
         }
 
-        if(self.recordState[i]==4 && self.wait==false){
+        if(self.recordState[i]==4 && self.waitEndRecord==false){ //When waiting to record is finished
           self.recordState[i]=1;
           document.getElementById('Record '+i.toString())?.click();
         }
@@ -153,31 +153,39 @@ export class AudioService{
       this.audio[i] = new Tone.Player();
       this.state[i] = 0;
       this.audio[i].volume.value=-20;
+
+
+    }
+    for(let i=0;i<this.recordNumber;i++){
+      this.deleteRecord(i);
     }
   }
 
   public recordClick(idRec : number){
+    //Manages the click on record
+
     if(this.recordState[idRec]==0){ //Not recording to recording
-      if(this.wait==false){
-        this.wait=true;
+      if(this.waitEndRecord==false){
+        this.waitEndRecord=true;
         this.recordState[idRec]=1;
-      }else if(this.wait==true){
+      }else if(this.waitEndRecord==true){
         this.recordState[idRec]=4;
       }
-    }else if (this.recordState[idRec]==1){ //Recording to paused
-        this.wait=false;
+    }else if (this.recordState[idRec]==1){ //Recording to stopped
+        this.waitEndRecord=false;
         this.recordState[idRec]=2;
         this.recordLength[idRec]=this.recordIterator[idRec];
         this.recordIterator[idRec]=0;
-    }else if (this.recordState[idRec]==2){ //Paused to playing
+    }else if (this.recordState[idRec]==2){ //stopped to playing
       this.recordState[idRec]=3;
-    }else if (this.recordState[idRec]==3){ //Playing to paused
+    }else if (this.recordState[idRec]==3){ //Playing to stopped
       this.recordIterator[idRec]=0;
       this.recordState[idRec]=2;
     }
   }
 
   public deleteRecord(idRec: number){
+    //Deletes the record of the line
     this.recordState[idRec]=0;
     this.records[idRec]=[];
     for(let i=0;i<this.numberButtonsByRecord;i++){

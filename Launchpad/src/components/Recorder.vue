@@ -33,40 +33,22 @@ export default class Recorder extends Vue {
   @Prop() readonly data!: Data;
 
   private idButton:string = "RecordButton "+this.recordNumber.toString();
-  private idDelete:string = "DeleteButton "+this.recordNumber.toString();
+  private idDelete:string = "DeleteButton none"+this.recordNumber.toString();
   private buttonColor:string = "black";
   private buttonIcon:string="fas fa-microphone";
   private displayDelete:string="none";
 
   mounted(){
-    console.log('Record '+this.idButton.toString())
     let self=this;
 
     setInterval(function() {
+      //Auto-updates the buttons
       self.updateButton();
-    }, 1000);
+    }, 200);
   }
 
 	startRecord() {
-		// Start sound if pad assigned
-    // Select sound if pad unassigned and instrument selected
-    // Make pad unassigned if instrument selected is Eraser
-
-    /*if(this.data.getInstrumentSelected()==""){
-      if(this.audio.getState(this.id)!=0){
-        this.audio.playAudio(this.id);
-      }
-    }else if (this.data.getInstrumentSelected()=="Erase"){
-      this.audio.stopAudio(this.id);
-      this.audio.erase(this.id);
-      this.updateColor();
-    }else if (this.data.getInstrumentSelected().includes(".")){
-      this.audio.addAudio(this.id, require("../assets/Lofi/"+this.data.getInstrumentSelected()))
-      this.updateColor();
-      this.deselectInstrument();
-    }*/
     this.audio.recordClick(this.recordNumber);
-    this.updateButton();
 	}
 
   @Emit("deselectInstrument")
@@ -77,11 +59,13 @@ export default class Recorder extends Vue {
     }
 
 	updateButton() {
-		//Update the loop and pad colors
+		//Update the record and delete buttons display
     if(this.audio.getRecordState(this.recordNumber)==0){
+      this.displayDelete="none";
       this.buttonColor="black";
       this.buttonIcon="fas fa-microphone";
     }else if(this.audio.getRecordState(this.recordNumber)==1){
+      this.displayDelete="none";
       this.buttonColor="red";
       this.buttonIcon="fas fa-microphone";
     }else if(this.audio.getRecordState(this.recordNumber)==2){
@@ -89,9 +73,11 @@ export default class Recorder extends Vue {
       this.buttonColor="green";
       this.buttonIcon="fas fa-play";
     }else if(this.audio.getRecordState(this.recordNumber)==3){
+      this.displayDelete="block";
       this.buttonColor="blue";
       this.buttonIcon="fas fa-stop";
     }else if(this.audio.getRecordState(this.recordNumber)==4){
+      this.displayDelete="none";
       this.buttonColor="grey";
       this.buttonIcon="fas fa-microphone";
     }
@@ -99,6 +85,7 @@ export default class Recorder extends Vue {
 	}
 
   deleteRecord(){
+    //Deletes the record of a line
     this.audio.deleteRecord(this.recordNumber);
     this.displayDelete="none";
     this.buttonIcon="fas fa-microphone";
