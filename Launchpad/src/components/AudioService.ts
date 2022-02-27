@@ -65,8 +65,8 @@ export class AudioService{
           for(let j=0;j<self.numberButtonsByRecord;j++){
             if(self.records[i][j][self.recordIterator[i]]==1){
               let id=i*8+j;
-              console.log(id);
-              document.getElementById(id.toString())?.click();
+              self.playAudio(id);
+
             }
           }
           self.recordIterator[i]++;
@@ -74,7 +74,6 @@ export class AudioService{
         }
 
         if(self.recordState[i]==4 && self.wait==false){
-          console.log("YEEEEE")
           self.recordState[i]=1;
           document.getElementById('Record '+i.toString())?.click();
         }
@@ -180,8 +179,9 @@ export class AudioService{
 
   public deleteRecord(idRec: number){
     this.recordState[idRec]=0;
+    this.records[idRec]=[];
     for(let i=0;i<this.numberButtonsByRecord;i++){
-      this.records[idRec][i]=[];
+      this.records[idRec].push([]);
     }
     this.recordIterator[idRec]=0;
     this.recordLength[idRec]=0;
